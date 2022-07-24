@@ -1,40 +1,40 @@
-# Foo
+Foo
 Jan 1970 @ Bar
 
 Author Name
 Job Title, Company
 https://clavinjune.dev/
 
-## Introduction
+* Introduction
 
-## Source Code
+* Source Code
 
 Download all the code from [https://github.com/clavinjune/@TODO](https://github.com/clavinjune/@TODO)
 
-## Another Header
+* Another Header
 
-## FOo
+* FOo
 
 : presenters note 
 .code -edit -numbers main.go /^func show/,/^}/
 .play -numbers main.go HL1
 
-## Graph
+* Graph
 
 .code graph.txt.ascii
 
-## Title of Slide or Section (must begin with ##)
+* Title of Slide or Section (must begin with ##)
 
 Some Text
 
-### Subsection {#anchor}
+** Subsection {#anchor}
 
 - bullets
 - more bullets
 - a bullet continued
   on the next line
 
-#### Sub-subsection
+*** Sub-subsection
 
 Some More text
 
