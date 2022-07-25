@@ -1,0 +1,59 @@
+Developing API Services With Golang
+Aug 2022 @ Find IT Geek
+
+Clavin June
+Backend Infrastructure Engineer, Technology Company
+https://clavinjune.dev/
+
+* Introduction
+
+* Source Code
+
+Source Code: [[https://github.com/anon-org/developing-api-services-with-golang]]
+Presentation: [[https://clavinjune.dev/finditgeek-aug-22]]
+
+
+* Another Header
+
+* FOo
+
+: presenters note 
+
+* Graph
+
+
+* Title of Slide or Section (must begin with ##)
+
+Some Text
+
+- bullets
+- more bullets
+- a bullet continued
+  on the next line
+
+* new slide
+
+** Subsection
+
+*** Sub-subsection
+
+Some More text
+
+	Preformatted text (code block)
+	is indented (by one tab, or four spaces)
+
+Further Text, including command invocations.
+
+* Section 2: Example formatting
+
+Formatting:
+
+_italic_
+// A comment that is completely ignored.
+: Speaker notes.
+*bold*
+`program`
+Markup—_especially italic text_—can easily be overused.
+_Why use scoped\_ptr_? Use plain **\*ptr** instead.
+
+Visit [the Go home page](https://golang.org/).
