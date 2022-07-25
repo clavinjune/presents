@@ -1,0 +1,7 @@
+[ Repository ] ==> { label: "Needed By"; } [ Service ] ==> { label: "Needed By"; } [ Transport ]
+
+[ Repository ] --> [ Output ]
+
+[ Input ] --> [ Transport ]
+
+[ Service ] ..> { label: "Contains"; } [ Business Logic ; Process ]

@@ -2,18 +2,73 @@ Developing API Services With Golang
 Aug 2022 @ Find IT Geek
 
 Clavin June
-Backend Infrastructure Engineer, Technology Company
+Software Engineer, Technology Company
 https://clavinjune.dev/
 
 * Introduction
 
-* Source Code
+: Knowledge check, ask about background, basic knowledge, and familiarity with HTTP Services
+
+* Resources
 
 Source Code: [[https://github.com/anon-org/developing-api-services-with-golang]]
-Presentation: [[https://clavinjune.dev/finditgeek-aug-22]]
+Presentation: [[https://clavinjune.dev/fig-aug-22]]
 
+* What You'll Learn
 
-* Another Header
+- Introduction to API Development with Golang
+- Structurize your Golang Application Project
+- Implement Clean Architecture
+
+* Prerequisites
+
+- Golang has been Installed in Your Machine
+- Your preferrable IDE / Text Editor
+- Know Basic Web / Browser / Internet
+- Know Basic Go Programming Language
+- Know Basic SQL Query Would be Helpful
+
+* Hands On
+
+* Your First API
+
+: API => Application Programming Interface => foobar
+
+.code assets/your-first-api.go HL1
+
+* How Your First API Works
+    
+    // fetch name query from the URL if not empty which is `John`
+    name := r.URL.Query().Get("name")
+ 
+    // check whether name is filled or not
+    if name == "" {
+        name = "World"
+    }
+ 
+    // write `Hello John!` using http.ResponseWriter
+    fmt.Fprintf(w, "Hello, %s!", name)
+ 
+    // Serve the API at http://localhost:8000
+    http.ListenAndServe(":8000", nil)
+
+* Your First API Response
+
+.image assets/your-first-api-response-1.png 200 600
+
+.image assets/your-first-api-response-2.png 200 600
+
+* Clean Architecture Basic Concept
+
+.code assets/graph.txt.ascii
+
+* Simple Implementation in Golang
+
+.code assets/clean-arch-simple.go /START OMIT/,/END OMIT/
+
+* Directory Structure
+
+.code assets/directory-structure.txt
 
 * FOo
 
@@ -57,3 +112,10 @@ Markup—_especially italic text_—can easily be overused.
 _Why use scoped\_ptr_? Use plain **\*ptr** instead.
 
 Visit [the Go home page](https://golang.org/).
+
+* References
+
+- [[https://github.com/bxcodec/go-clean-arch]]
+- [[https://clavinjune.dev/en/blogs/this-is-why-you-should-learn-golang/]]
+- [[https://clavinjune.dev/en/blogs/golang-dependency-injection-using-wire/]]
+- [[https://clavinjune.dev/en/blogs/contextual-logging-in-go/]]
