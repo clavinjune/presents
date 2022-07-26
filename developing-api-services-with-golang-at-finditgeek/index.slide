@@ -96,7 +96,11 @@ Presentation: [[https://clavinjune.dev/fig-aug-22]]
 
 * Going Deeper
 
-* Clean Architecture Basic Concept
+* The Clean Architecture
+
+.image https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg
+
+* Clean Architecture Basic implementation
 
 .code assets/graph.txt.ascii
 
