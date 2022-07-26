@@ -58,6 +58,26 @@ Presentation: [[https://clavinjune.dev/fig-aug-22]]
 
 .image assets/your-first-api-response-2.png 200 600
 
+* How Others can Find Your API?
+
+  PATH
+  - /
+  - /v1/tasks/
+  - /this/is/path
+ 
+  HTTP Method
+  - GET
+  - POST
+  - PUT
+  - PATCH
+  - DELETE
+  - HEAD
+  - OPTIONS
+
+* HTTP Method Usage
+
+.code assets/http-method-table.txt.ascii
+
 * Clean Architecture Basic Concept
 
 .code assets/graph.txt.ascii

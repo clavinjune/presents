@@ -1,0 +1,11 @@
++-------------+-------------------+
+| HTTP Method |       Usage       |
+| =========== | ================= |
+|     GET     |  fetch resources  |
+|    POST     |  store resources  |
+|     PUT     |  upsert resources |
+|    PATCH    |  update resources |
+|   DELETE    | destroy resources |
+|    HEAD     |   fetch metadata  |
+|   OPTIONS   | preflight request |
++-------------+-------------------+

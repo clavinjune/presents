@@ -1,0 +1,17 @@
+[ HTTP Method\n
+===========\n
+GET\n
+POST\n
+PUT\n
+PATCH\n
+DELETE\n
+HEAD\n
+OPTIONS | Usage\n
+=================\n
+fetch resources\n
+store resources\n
+upsert resources\n
+update resources\n
+destroy resources\n
+fetch metadata\n
+preflight request ]
