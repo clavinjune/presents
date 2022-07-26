@@ -100,6 +100,13 @@ Presentation: [[https://clavinjune.dev/fig-aug-22]]
 
 .code assets/graph.txt.ascii
 
+  1. Transport is an implementation of Framework/Driver for input (request/response)
+  2. Service is the only interface which works directly with entities and business & application
+     logic (Application Business Rules)
+  3. Repository is an implementation of Framework/Driver for output/storage
+  4. Data transformation between layers will be done on the fly
+     to simplify the Interface Adapter layers
+
 * Simple Implementation in Golang
 
 .code assets/clean-arch-simple.go /START OMIT/,/END OMIT/
@@ -116,6 +123,16 @@ Presentation: [[https://clavinjune.dev/fig-aug-22]]
 
 .code assets/directory-structure.txt
 
+  cmd/       - to put your application command (http, cli, grpc)
+  domain/    - to put your application entities and interfaces (task, user, product)
+  task/      - to put your clean architecture implementation of task entity, if you have user
+               entity, then create user directory
+  provider   - to put your dependency provider (constructor) here, will works along with dependency
+               injection
+  repository - to put your repository implementation (sqlite, mysql, external service)
+  service    - to put your business & application logic
+  transport  - to put your transport implementation (http, grpc, cli)
+
 * Going Beyond
 
 : - Testing
@@ -126,6 +143,7 @@ Presentation: [[https://clavinjune.dev/fig-aug-22]]
 
 * References
 
-- [[https://github.com/bxcodec/go-clean-arch]]
+- [[https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html]]
+- [[https://martinfowler.com/articles/injection.html]]
 - [[https://clavinjune.dev/en/blogs/this-is-why-you-should-learn-golang/]]
 - [[https://clavinjune.dev/en/blogs/golang-dependency-injection-using-wire/]]
