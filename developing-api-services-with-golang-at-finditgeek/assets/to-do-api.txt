@@ -1,0 +1,13 @@
+[ Routes \n
+===========\n
+GET /tasks/ \n
+GET /tasks/:id \n
+POST /tasks/ \n
+PATCH /tasks/ \n
+DELETE /tasks/ | Usage \n
+=================\n
+fetch all tasks\n
+fetch task by ID\n
+store resources\n
+update resources\n
+destroy resources ]

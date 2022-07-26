@@ -58,9 +58,9 @@ Presentation: [[https://clavinjune.dev/fig-aug-22]]
 
 .image assets/your-first-api-response-2.png 200 600
 
-* How Others can Find Your API?
+* How Others can Use Your API?
 
-  PATH
+  Path
   - /
   - /v1/tasks/
   - /this/is/path
@@ -78,6 +78,24 @@ Presentation: [[https://clavinjune.dev/fig-aug-22]]
 
 .code assets/http-method-table.txt.ascii
 
+* To Do API
+
+.code assets/to-do-api.txt.ascii
+
+* Write Tasks Handler
+
+.code assets/to-do-api.go
+
+* HTTP Status Code
+
+- 1xx - Information
+- 2xx - Success
+- 3xx - Redirect
+- 4xx - Client error
+- 5xx - Server error
+
+* Going Deeper
+
 * Clean Architecture Basic Concept
 
 .code assets/graph.txt.ascii
@@ -86,56 +104,28 @@ Presentation: [[https://clavinjune.dev/fig-aug-22]]
 
 .code assets/clean-arch-simple.go /START OMIT/,/END OMIT/
 
+* Dependency Inversion
+
+  Entities must depend on abstractions, not on concretions.
+  It states that the high-level module must not depend on the low-level module,
+  but they should depend on abstractions.
+
+.code assets/dependency-inversion.go
+
 * Directory Structure
 
 .code assets/directory-structure.txt
 
-* FOo
+* Going Beyond
 
-: presenters note 
-
-* Graph
-
-
-* Title of Slide or Section (must begin with ##)
-
-Some Text
-
-- bullets
-- more bullets
-- a bullet continued
-  on the next line
-
-* new slide
-
-** Subsection
-
-*** Sub-subsection
-
-Some More text
-
-	Preformatted text (code block)
-	is indented (by one tab, or four spaces)
-
-Further Text, including command invocations.
-
-* Section 2: Example formatting
-
-Formatting:
-
-_italic_
-// A comment that is completely ignored.
-: Speaker notes.
-*bold*
-`program`
-Markup—_especially italic text_—can easily be overused.
-_Why use scoped\_ptr_? Use plain **\*ptr** instead.
-
-Visit [the Go home page](https://golang.org/).
+: - Testing
+: - Dependency Injection
+: - Authentication & Authorization
+: - Versioning
+: - CORS
 
 * References
 
 - [[https://github.com/bxcodec/go-clean-arch]]
 - [[https://clavinjune.dev/en/blogs/this-is-why-you-should-learn-golang/]]
 - [[https://clavinjune.dev/en/blogs/golang-dependency-injection-using-wire/]]
-- [[https://clavinjune.dev/en/blogs/contextual-logging-in-go/]]
