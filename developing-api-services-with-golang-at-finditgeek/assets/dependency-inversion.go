@@ -4,12 +4,14 @@ type TaskRepository interface {
 
 type TaskRepoPostgresql struct{}
 
-func (p TaskRepoPostgresql) Fetch() ([]*Task, error) {
-	// implement fetch from DB
-}
+func (p TaskRepoPostgresql) Fetch() ([]*Task, error) {}
 
 type TaskRepoVendor struct{}
 
-func (v TaskRepoVendor) Fetch() ([]*Task, error) {
-	// implement fetch from vendor
-}
+func (v TaskRepoVendor) Fetch() ([]*Task, error) {}
+
+type TaskServiceV1 struct { // HL1
+	// don't need to know whether it's Postgresql or Vendor // HL1
+	// gives dependants more freedom to choose the TaskRepository implementation // HL1
+	repo TaskRepository // HL1
+} // HL1
