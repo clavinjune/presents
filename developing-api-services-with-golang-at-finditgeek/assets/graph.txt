@@ -1,7 +1,11 @@
-[ Repository ] ==> { label: "Needed By"; } [ Service ] ==> { label: "Needed By"; } [ Transport ]
+[ Internet ] --> {label: "Request"; } [ Transport ]
+[ Transport ] --> { label: "Request"; } [ Service ]
+[ Service ] --> { label: "Request"; } [ Repository ]
 
-[ Repository ] --> [ Output ]
+[ Transport ] ..> { label: "Contains"; } [ Delivery ]
+[ Service ] ..> { label: "Contains"; } [ Business ]
+[ Repository ] ..> { label: "Contains"; } [ Database ]
 
-[ Input ] --> [ Transport ]
-
-[ Service ] ..> { label: "Contains"; } [ Business Logic ; Process ]
+[ Repository ] ==> { label: "Response"; } [ Service ]
+[ Service ] ==> { label: "Response"; } [ Transport ]
+[ Transport ] ==> { label: "Response"; } [ Internet ]

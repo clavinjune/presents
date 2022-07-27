@@ -4,8 +4,6 @@
 │       └── main.go
 ├── domain
 │   └── task.go
-├── go.mod
-├── go.sum
 └── task
     ├── provider.go
     ├── v1_repository_sqlite.go

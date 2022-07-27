@@ -7,18 +7,19 @@ https://clavinjune.dev/
 
 * Introduction
 
-: Knowledge check, ask about background, basic knowledge, and familiarity with HTTP Services
+: Knowledge check, ask about background, basic knowledge, OS, and familiarity with HTTP Services
 
 * Resources
 
-Source Code: [[https://github.com/anon-org/developing-api-services-with-golang]]
-Presentation: [[https://clavinjune.dev/fig-aug-22]]
+Source Code: [[https://github.com/anon-org/developing-api-services-with-golang/]]
+Presentation: [[https://clavinjune.dev/fig-aug-22/]] or [[https://clavinjune.github.io/presents/]]
 
 * What You'll Learn
 
 - Introduction to API Development with Golang
 - Structurize your Golang Application Project
-- Implement Clean Architecture
+- Single Responsibility Principle / Separation of Concerns
+- Dependency Inversion Principle
 
 * Prerequisites
 
@@ -32,7 +33,7 @@ Presentation: [[https://clavinjune.dev/fig-aug-22]]
 
 * Your First API
 
-: API => Application Programming Interface => foobar
+: API => Application Programming Interface => Middleman for 2 services to communicate
 
 .code assets/your-first-api.go HL1
 
@@ -96,24 +97,15 @@ Presentation: [[https://clavinjune.dev/fig-aug-22]]
 
 * Going Deeper
 
-* The Clean Architecture
+: Hands on to the real code here
 
-.image https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg
+* Work Flow Diagram
 
-* Clean Architecture Basic implementation
-
-.code assets/graph.txt.ascii
-
-  1. Transport is an implementation of Framework/Driver for input (request/response)
-  2. Service is the only interface which works directly with entities and business & application
-     logic (Application Business Rules)
-  3. Repository is an implementation of Framework/Driver for output/storage
-  4. Data transformation between layers will be done on the fly
-     to simplify the Interface Adapter layers
+.image assets/graph.png
 
 * Simple Implementation in Golang
 
-.code assets/clean-arch-simple.go /START OMIT/,/END OMIT/
+.code assets/simple-implementation.go /START OMIT/,/END OMIT/
 
 * Dependency Inversion
 
@@ -128,14 +120,15 @@ Presentation: [[https://clavinjune.dev/fig-aug-22]]
 .code assets/directory-structure.txt
 
   cmd/       - to put your application command (http, cli, grpc)
-  domain/    - to put your application entities and interfaces (task, user, product)
-  task/      - to put your clean architecture implementation of task entity, if you have user
-               entity, then create user directory
+  domain/    - to put your application entities, specification, models and interfaces
+               (task, user, product, etc)
+  task/      - to put your task entity implementation, if you have user entity, then create user
+               directory
   provider   - to put your dependency provider (constructor) here, will works along with dependency
                injection
   repository - to put your repository implementation (sqlite, mysql, external service)
   service    - to put your business & application logic
-  transport  - to put your transport implementation (http, grpc, cli)
+  transport  - to put your transport implementation (http, cli, grpc)
 
 * Going Beyond
 
@@ -148,6 +141,7 @@ Presentation: [[https://clavinjune.dev/fig-aug-22]]
 * References
 
 - [[https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html]]
-- [[https://martinfowler.com/articles/injection.html]]
-- [[https://clavinjune.dev/en/blogs/this-is-why-you-should-learn-golang/]]
 - [[https://clavinjune.dev/en/blogs/golang-dependency-injection-using-wire/]]
+- [[https://clavinjune.dev/en/blogs/this-is-why-you-should-learn-golang/]]
+- [[https://digitalocean.com/community/conceptual_articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design]]
+- [[https://martinfowler.com/articles/injection.html]]

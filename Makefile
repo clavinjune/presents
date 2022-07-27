@@ -12,6 +12,14 @@ get:
 # make graph foo-at-bar/graph.txt
 graph:
 	@$(GRAPH_EASY_CMD) $(FILE) > "$(FILE).ascii"
+graph-png:
+	@$(GRAPH_EASY_CMD) $(FILE) --png
+
+base=./developing-api-services-with-golang-at-finditgeek/assets
+graph/developing-api-services-with-golang-at-finditgeek: 
+	@$(MAKE) graph-png FILE="$(base)/graph.txt"
+	@$(MAKE) graph FILE=$(base)/http-method-table.txt
+	@$(MAKE) graph FILE=$(base)/to-do-api.txt
 
 install/graph-easy:
 	@brew install graphviz

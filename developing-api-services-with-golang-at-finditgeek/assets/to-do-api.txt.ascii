@@ -1,9 +1,9 @@
-+----------------+-------------------+
-|     Routes     |       Usage       |
-|  ===========   | ================= |
-|  GET /tasks/   |  fetch all tasks  |
-| GET /tasks/:id |  fetch task by ID |
-|  POST /tasks/  |  store resources  |
-| PATCH /tasks/  |  update resources |
-| DELETE /tasks/ | destroy resources |
-+----------------+-------------------+
++-------------------+-------------------+
+|      Routes       |       Usage       |
+| ================= | ================= |
+|    GET /tasks/    |  fetch all tasks  |
+|  GET /tasks/:id   |  fetch task by ID |
+|   POST /tasks/    |  store resources  |
+| PATCH /tasks/:id  |  update resources |
+| DELETE /tasks/:id | destroy resources |
++-------------------+-------------------+
