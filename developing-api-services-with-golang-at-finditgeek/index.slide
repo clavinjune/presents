@@ -66,7 +66,7 @@ Presentation: [[https://clavinjune.dev/fig-aug-22/]] or [[https://clavinjune.git
   Path
   - /
   - /v1/tasks/
-  - /this/is/path
+  - /this/is/path/to/the-resources/
  
   HTTP Method
   - GET
@@ -114,7 +114,7 @@ Presentation: [[https://clavinjune.dev/fig-aug-22/]] or [[https://clavinjune.git
   Entities must depend on abstractions, not on concretions. It states that the high-level module
   must not depend on the low-level module, but they should depend on abstractions. To simplify,
   Dependency Inversion makes all the components don't need to know the details of other components
-  and gives them more freedom to choose the TaskRepository implementation.
+  and gives them more freedom to choose their dependencies implementation.
 
 .code assets/dependency-inversion.go HL1
 
