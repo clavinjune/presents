@@ -9,17 +9,16 @@ https://clavinjune.dev/
 
 : Knowledge check, ask about background, basic knowledge, OS, and familiarity with HTTP Services
 
+* Google Form to Know You Well
+
+.iframe https://docs.google.com/forms/d/e/1FAIpQLSfwH-VL4TphBqX6l1Do5_BZsHISjmz7sa2WJ3D4js8YLgT9rA/viewform?embedded=true 635 935
+: gform https://forms.gle/TmbG9Wr96zDMpmKF9/
+
 * Resources
 
 Source Code: [[https://github.com/anon-org/developing-api-services-with-golang/]]
-Presentation: [[https://clavinjune.dev/fig-aug-22/]] or [[https://clavinjune.github.io/presents/]]
+Presentation: [[https://presents.clavinjune.dev/]] or [[https://clavinjune.dev/fig-aug-22/]]
 
-* What You'll Learn
-
-- Introduction to API Development with Golang
-- Structurize your Golang Application Project
-- Single Responsibility Principle / Separation of Concerns
-- Dependency Inversion Principle
 
 * Prerequisites
 
@@ -28,6 +27,13 @@ Presentation: [[https://clavinjune.dev/fig-aug-22/]] or [[https://clavinjune.git
 - Know Basic Web / Browser / Internet
 - Know Basic Go Programming Language
 - Know Basic SQL Query Would be Helpful
+
+* What You'll Learn
+
+- Introduction to API Development with Golang
+- Structurize your Golang Application Project
+- Single Responsibility Principle / Separation of Concerns
+- Dependency Inversion Principle
 
 * Warming Up
 
@@ -81,6 +87,20 @@ Presentation: [[https://clavinjune.dev/fig-aug-22/]] or [[https://clavinjune.git
 
 .code assets/http-method-table.txt.ascii
 
+* HTTP Request
+
+*Query* *Parameter*
+
+.code -edit assets/http-request.txt /^START QUERY/,/^END QUERY/
+
+*Path* *Parameter*
+
+.code -edit assets/http-request.txt /^START PATH/,/^END PATH/
+
+*Request* *Body*
+
+.code -edit assets/http-request.txt /^START BODY/,/^END BODY/
+
 * To Do API
 
 .code assets/to-do-api.txt.ascii
@@ -106,6 +126,9 @@ Presentation: [[https://clavinjune.dev/fig-aug-22/]] or [[https://clavinjune.git
 .image assets/graph.png
 
 * Single Responsibility / Separation of Concerns
+
+  A class should have one and only one reason to change, meaning that a class should have only one
+  job.
 
 .code assets/simple-implementation.go /START OMIT/,/END OMIT/
 
@@ -133,6 +156,18 @@ Presentation: [[https://clavinjune.dev/fig-aug-22/]] or [[https://clavinjune.git
   service    - to put your business & application logic
   transport  - to put your transport implementation (http, cli, grpc)
 
+* Fetch All Tasks Test
+
+  ./cmd/fetch-example/main.go
+
+.code -edit assets/fetch-all-tasks-test.go
+
+* Store Task Test
+
+  ./cmd/store-example/main.go
+
+.code -edit assets/store-test.go
+
 * Going Beyond
 
 : - Testing
@@ -153,5 +188,11 @@ Presentation: [[https://clavinjune.dev/fig-aug-22/]] or [[https://clavinjune.git
 - [[https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html]]
 - [[https://clavinjune.dev/en/blogs/golang-dependency-injection-using-wire/]]
 - [[https://clavinjune.dev/en/blogs/this-is-why-you-should-learn-golang/]]
-- [[https://digitalocean.com/community/conceptual_articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design]]
+- [[https://digitalocean.com/community/conceptual_articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design/]]
+- [[https://jsonplaceholder.typicode.com/]]
 - [[https://martinfowler.com/articles/injection.html]]
+
+* Google Form to Know Me Well
+
+.iframe https://docs.google.com/forms/d/e/1FAIpQLSfKEJKy1SKAnutWdlc3DyhrHKhLD1P4v8Wl3-VLQH5mLxn0lA/viewform?embedded=true 635 935
+: gform https://forms.gle/291ijf6vfvKisBxB7/
