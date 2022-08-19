@@ -9,16 +9,15 @@ https://clavinjune.dev/
 
 : Knowledge check, ask about background, basic knowledge, OS, and familiarity with HTTP Services
 
+* Resources
+
+Complete Source Code: [[https://github.com/anon-org/developing-api-services-with-golang/]]
+Presentation: [[https://presents.clavinjune.dev/]] or [[https://clavinjune.dev/fig-aug-22/]]
+
 * Google Form to Know You Well
 
 .iframe https://docs.google.com/forms/d/e/1FAIpQLSfwH-VL4TphBqX6l1Do5_BZsHISjmz7sa2WJ3D4js8YLgT9rA/viewform?embedded=true 635 935
 : gform https://forms.gle/TmbG9Wr96zDMpmKF9/
-
-* Resources
-
-Source Code: [[https://github.com/anon-org/developing-api-services-with-golang/]]
-Presentation: [[https://presents.clavinjune.dev/]] or [[https://clavinjune.dev/fig-aug-22/]]
-
 
 * Prerequisites
 
