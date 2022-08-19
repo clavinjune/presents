@@ -14,7 +14,7 @@ func main() {
 	suffix := rand.Intn(1000)
 	payload := fmt.Sprintf(`{"name": "testing demo %04d"}`, suffix)
 	body := strings.NewReader(payload)
-	resp, _ := http.Post("http://localhost:8000/v1/tasks/", "application/json", body)
+	resp, _ := http.Post("http://localhost:8000/tasks/", "application/json", body)
 	defer resp.Body.Close()
 	b, _ := io.ReadAll(resp.Body)
 	fmt.Println(string(b))

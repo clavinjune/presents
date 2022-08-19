@@ -6,6 +6,6 @@
 │   └── task.go
 └── task
     ├── provider.go
-    ├── v1_repository_sqlite.go
-    ├── v1_service.go
-    └── v1_transport_http.go
+    ├── repository_sqlite.go
+    ├── service.go
+    └── transport_http.go

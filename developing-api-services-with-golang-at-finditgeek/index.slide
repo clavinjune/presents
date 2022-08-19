@@ -41,7 +41,7 @@ Presentation: [[https://presents.clavinjune.dev/]] or [[https://clavinjune.dev/f
 
 : API => Application Programming Interface => Middleman for 2 services to communicate
 
-.code assets/your-first-api.go HL1
+.code -edit assets/your-first-api.go HL1
 
 * How Your First API Works
     
@@ -107,7 +107,7 @@ Presentation: [[https://presents.clavinjune.dev/]] or [[https://clavinjune.dev/f
 
 * Write Tasks Handler
 
-.code assets/to-do-api.go
+.code -edit assets/to-do-api.go
 
 * HTTP Status Code
 
