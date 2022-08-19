@@ -4,7 +4,7 @@ const (
 		name TEXT NOT NULL UNIQUE
 	)`
 
-	querySeed string = `INERT INTO tasks VALUES('seed1', 'task seed 1')`
+	querySeed string = `INSERT INTO tasks VALUES('seed1', 'task seed 1')`
 )
 
 // this function is simplified // HL1
