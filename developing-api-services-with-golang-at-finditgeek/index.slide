@@ -141,6 +141,10 @@ Presentation: [[https://presents.clavinjune.dev/]] or [[https://clavinjune.dev/f
 
 .code assets/dependency-inversion.go HL1
 
+* Connecting to the Database
+
+.code -edit assets/connecting-to-the-database.go HL1
+
 * Directory Structure
 
 .code assets/directory-structure.txt
