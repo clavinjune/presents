@@ -1,0 +1,24 @@
+Create Plug-n-Play Services with Plugin Stdlib
+Feb 2024 @ GopherCon EU - Athens
+
+Clavin June
+Software Infrastructure Engineer, GoTo Financial
+https://clavinjune.dev/
+
+* Plugin Stdlib
+
+Build the Plugin
+
+	go build -buildmode=plugin -o plugin.so main.go	
+
+Usage
+
+	p, err := plugin.Open("./plugin.so")
+	check(err)
+	s, err := p.Lookup(SymbolName)
+	check(err)
+	c, ok := s.(*your.apiContract)
+
+* Demo
+
+.video assets/demo.mov video/mp4 550 900
