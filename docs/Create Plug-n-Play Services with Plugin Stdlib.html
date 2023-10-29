@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<!-- saved from url=(0082)http://localhost:3999/create-plug-n-play-services-with-plugin-stdlib/index.slide#1 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Create Plug-n-Play Services with Plugin Stdlib</title>
+    
+    <script>
+      var notesEnabled =  true ;
+    </script>
+    <script src="./Create Plug-n-Play Services with Plugin Stdlib_files/slides.js"></script>
+
+    
+    <script>
+      var sections = [{"Number":[1],"Title":"Plugin Stdlib","ID":"","Elem":[{"Lines":["Build the Plugin"],"Pre":false,"Raw":""},{"Lines":["go build -buildmode=plugin -o plugin.so main.go"],"Pre":true,"Raw":"go build -buildmode=plugin -o plugin.so main.go\t\n"},{"Lines":["Usage"],"Pre":false,"Raw":""},{"Lines":["import \"plugin\"\n\np, _ := plugin.Open(\"./plugin.so\")\nsym, _ := p.Lookup(\"SymbolName\")\ncontract, _ := s.(*your.apiContract)"],"Pre":true,"Raw":"import \"plugin\"\n\np, _ := plugin.Open(\"./plugin.so\")\nsym, _ := p.Lookup(\"SymbolName\")\ncontract, _ := s.(*your.apiContract)\n"}],"Notes":null,"Classes":null,"Styles":null},{"Number":[2],"Title":"Demo","ID":"","Elem":[{"Cmd":".video assets/demo.mov video/mp4 550 900","URL":"assets/demo.mov","SourceType":"video/mp4","Width":900,"Height":550}],"Notes":null,"Classes":null,"Styles":null},{"Number":[3],"Title":"But, Why?","ID":"","Elem":[{"Bullet":["Extending functionality dynamically","Modularity","Scalability"]}],"Notes":null,"Classes":null,"Styles":null},{"Number":[4],"Title":"Resources","ID":"","Elem":[{"Bullet":["Slides: [[https://presents.clavinjune.dev/Create%20Plug-n-Play%20Services%20with%20Plugin%20Stdlib.html][presents.clavinjune.dev]]","Repository: [[https://github.com/clavinjune/plugin-demo]]"]}],"Notes":null,"Classes":null,"Styles":null}];
+      var titleNotes = ["Feb 2024 @ GopherCon EU - Athens"]
+    </script>
+    <script src="./Create Plug-n-Play Services with Plugin Stdlib_files/notes.js"></script>
+    
+
+    <script>
+      
+      if (window["location"] && window["location"]["hostname"] == "talks.golang.org") {
+        var _gaq = _gaq || [];
+        _gaq.push(["_setAccount", "UA-11222381-6"]);
+        _gaq.push(["b._setAccount", "UA-49880327-6"]);
+        window.trackPageview = function() {
+          _gaq.push(["_trackPageview", location.pathname+location.hash]);
+          _gaq.push(["b._trackPageview", location.pathname+location.hash]);
+        };
+        window.trackPageview();
+        window.trackEvent = function(category, action, opt_label, opt_value, opt_noninteraction) {
+          _gaq.push(["_trackEvent", category, action, opt_label, opt_value, opt_noninteraction]);
+          _gaq.push(["b._trackEvent", category, action, opt_label, opt_value, opt_noninteraction]);
+        };
+      }
+    </script>
+  <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1"><meta name="apple-mobile-web-app-capable" content="yes"></head>
+
+  <body style="display: none" class="loaded">
+
+    <section class="slides layout-widescreen">
+
+      <article class="current">
+        <h1>Create Plug-n-Play Services with Plugin Stdlib</h1>
+        
+        
+        
+          <div class="presenter">
+            
+  
+  <p>
+    Clavin June
+  </p>
+  
+
+  
+  <p>
+    Software Infrastructure Engineer, GoTo Financial
+  </p>
+  
+
+          </div>
+        
+      </article>
+
+  
+  
+      <article class="next">
+      
+        <h3>Plugin Stdlib</h3>
+        
+  
+  <p>
+    Build the Plugin
+  </p>
+  
+
+  
+  <div class="code"><pre>go build -buildmode=plugin -o plugin.so main.go</pre></div>
+  
+
+  
+  <p>
+    Usage
+  </p>
+  
+
+  
+  <div class="code"><pre>import "plugin"
+
+p, _ := plugin.Open("./plugin.so")
+sym, _ := p.Lookup("SymbolName")
+contract, _ := s.(*your.apiContract)</pre></div>
+  
+
+      
+      <span class="pagenumber">2</span>
+      </article>
+  
+  
+  
+      <article class="far-next">
+      
+        <h3>Demo</h3>
+        
+<div class="video">
+  <video height="550" width="900" controls="">
+    <source src="assets/demo.mov" type="video/mp4">
+  </video>
+</div>
+
+      
+      <span class="pagenumber">3</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>But, Why?</h3>
+        
+  <ul>
+  
+    <li>Extending functionality dynamically</li>
+  
+    <li>Modularity</li>
+  
+    <li>Scalability</li>
+  
+  </ul>
+
+      
+      <span class="pagenumber">4</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Resources</h3>
+        
+  <ul>
+  
+    <li>Slides: <a href="https://presents.clavinjune.dev/Create%20Plug-n-Play%20Services%20with%20Plugin%20Stdlib.html" target="_blank">presents.clavinjune.dev</a></li>
+  
+    <li>Repository: <a href="https://github.com/clavinjune/plugin-demo" target="_blank">github.com/clavinjune/plugin-demo</a></li>
+  
+  </ul>
+
+      
+      <span class="pagenumber">5</span>
+      </article>
+  
+  
+
+      <article>
+        <h3>Thank you</h3>
+        
+          <div class="presenter">
+            
+  
+  <p>
+    Clavin June
+  </p>
+  
+
+  
+  <p>
+    Software Infrastructure Engineer, GoTo Financial
+  </p>
+  
+<p class="link"><a href="https://clavinjune.dev/" target="_blank">https://clavinjune.dev/</a></p>
+          </div>
+        
+      </article>
+
+    <div class="slide-area" id="prev-slide-area"></div><div class="slide-area" id="next-slide-area"></div></section>
+
+    <div id="help" style="display: none;">
+      Use the left and right arrow keys or click the left and right
+      edges of the page to navigate between slides.<br>
+      (Press 'H' or navigate to hide this message.)
+    </div>
+
+    
+    <script src="./Create Plug-n-Play Services with Plugin Stdlib_files/play.js"></script>
+    
+
+    <script>
+      (function() {
+        
+        if (window["location"] && window["location"]["hostname"] == "talks.golang.org") {
+          var ga = document.createElement("script"); ga.type = "text/javascript"; ga.async = true;
+          ga.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";
+          var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ga, s);
+        }
+      })();
+    </script>
+  
+
+<link rel="stylesheet" type="text/css" href="./Create Plug-n-Play Services with Plugin Stdlib_files/css"><link rel="stylesheet" type="text/css" href="./Create Plug-n-Play Services with Plugin Stdlib_files/styles.css"></body></html>
