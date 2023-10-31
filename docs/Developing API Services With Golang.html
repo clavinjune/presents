@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<!-- saved from url=(0085)http://localhost:3999/developing-api-services-with-golang-at-finditgeek/index.slide#1 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Developing API Services With Golang</title>
+    
+    <script>
+      var notesEnabled =  true ;
+    </script>
+    <script src="./Developing API Services With Golang_files/slides.js"></script>
+
+    
+    <script>
+      var sections = [{"Number":[1],"Title":"Introduction","ID":"","Elem":null,"Notes":["Knowledge check, ask about background, basic knowledge, OS, and familiarity with HTTP Services"],"Classes":null,"Styles":null},{"Number":[2],"Title":"Google Form to Know You Well","ID":"","Elem":[{"Cmd":".iframe https://docs.google.com/forms/d/e/1FAIpQLSfwH-VL4TphBqX6l1Do5_BZsHISjmz7sa2WJ3D4js8YLgT9rA/viewform?embedded=true 635 935","URL":"https://docs.google.com/forms/d/e/1FAIpQLSfwH-VL4TphBqX6l1Do5_BZsHISjmz7sa2WJ3D4js8YLgT9rA/viewform?embedded=true","Width":935,"Height":635}],"Notes":["gform https://forms.gle/TmbG9Wr96zDMpmKF9/"],"Classes":null,"Styles":null},{"Number":[3],"Title":"Resources","ID":"","Elem":[{"Lines":["Source Code: [[https://github.com/anon-org/developing-api-services-with-golang/]]","Presentation: [[https://presents.clavinjune.dev/]] or [[https://clavinjune.dev/fig-aug-22/]]"],"Pre":false,"Raw":""}],"Notes":null,"Classes":null,"Styles":null},{"Number":[4],"Title":"Prerequisites","ID":"","Elem":[{"Bullet":["Golang has been Installed in Your Machine","Your preferrable IDE / Text Editor","Know Basic Web / Browser / Internet","Know Basic Go Programming Language","Know Basic SQL Query Would be Helpful"]}],"Notes":null,"Classes":null,"Styles":null},{"Number":[5],"Title":"What You'll Learn","ID":"","Elem":[{"Bullet":["Introduction to API Development with Golang","Structurize your Golang Application Project","Single Responsibility Principle / Separation of Concerns","Dependency Inversion Principle"]}],"Notes":null,"Classes":null,"Styles":null},{"Number":[6],"Title":"Warming Up","ID":"","Elem":null,"Notes":null,"Classes":null,"Styles":null},{"Number":[7],"Title":"Your First API","ID":"","Elem":[{"Cmd":".code -edit assets/your-first-api.go HL1","Text":"\n\u003cpre contenteditable=\"true\" spellcheck=\"false\"\u003e\u003cspan num=\"1\"\u003epackage main\u003c/span\u003e\n\u003cspan num=\"2\"\u003e\u003c/span\u003e\n\u003cspan num=\"3\"\u003eimport (\u003c/span\u003e\n\u003cspan num=\"4\"\u003e    \u0026#34;fmt\u0026#34;\u003c/span\u003e\n\u003cspan num=\"5\"\u003e    \u0026#34;log\u0026#34;\u003c/span\u003e\n\u003cspan num=\"6\"\u003e    \u0026#34;net/http\u0026#34;\u003c/span\u003e\n\u003cspan num=\"7\"\u003e)\u003c/span\u003e\n\u003cspan num=\"8\"\u003e\u003c/span\u003e\n\u003cspan num=\"9\"\u003efunc main() {\u003c/span\u003e\n\u003cspan num=\"10\"\u003e    \u003cb\u003ehttp.HandleFunc(\u0026#34;/\u0026#34;, func(w http.ResponseWriter, r *http.Request) {\u003c/b\u003e\u003c/span\u003e\n\u003cspan num=\"11\"\u003e        \u003cb\u003ename := r.URL.Query().Get(\u0026#34;name\u0026#34;)\u003c/b\u003e\u003c/span\u003e\n\u003cspan num=\"12\"\u003e        \u003cb\u003eif name == \u0026#34;\u0026#34; {\u003c/b\u003e\u003c/span\u003e\n\u003cspan num=\"13\"\u003e            \u003cb\u003ename = \u0026#34;World\u0026#34;\u003c/b\u003e\u003c/span\u003e\n\u003cspan num=\"14\"\u003e        \u003cb\u003e}\u003c/b\u003e\u003c/span\u003e\n\u003cspan num=\"15\"\u003e\u003c/span\u003e\n\u003cspan num=\"16\"\u003e        \u003cb\u003efmt.Fprintf(w, \u0026#34;Hello, %s!\u0026#34;, name)\u003c/b\u003e\u003c/span\u003e\n\u003cspan num=\"17\"\u003e    \u003cb\u003e})\u003c/b\u003e\u003c/span\u003e\n\u003cspan num=\"18\"\u003e\u003c/span\u003e\n\u003cspan num=\"19\"\u003e    log.Println(\u0026#34;Listening on port 8000\u0026#34;)\u003c/span\u003e\n\u003cspan num=\"20\"\u003e    http.ListenAndServe(\u0026#34;:8000\u0026#34;, nil)\u003c/span\u003e\n\u003cspan num=\"21\"\u003e\u003c/span\u003e\n\u003cspan num=\"22\"\u003e    // You can access it at http://localhost:8000/?name=John\u003c/span\u003e\n\u003cspan num=\"23\"\u003e}\u003c/span\u003e\n\u003c/pre\u003e\n","Play":false,"Edit":true,"FileName":"your-first-api.go","Ext":".go","Raw":"cGFja2FnZSBtYWluCgppbXBvcnQgKAoJImZtdCIKCSJsb2ciCgkibmV0L2h0dHAiCikKCmZ1bmMgbWFpbigpIHsKCWh0dHAuSGFuZGxlRnVuYygiLyIsIGZ1bmModyBodHRwLlJlc3BvbnNlV3JpdGVyLCByICpodHRwLlJlcXVlc3QpIHsgLy8gSEwxCgkJbmFtZSA6PSByLlVSTC5RdWVyeSgpLkdldCgibmFtZSIpIC8vIEhMMQoJCWlmIG5hbWUgPT0gIiIgeyAgICAgICAgICAgICAgICAgICAvLyBITDEKCQkJbmFtZSA9ICJXb3JsZCIgLy8gSEwxCgkJfSAvLyBITDEKCgkJZm10LkZwcmludGYodywgIkhlbGxvLCAlcyEiLCBuYW1lKSAvLyBITDEKCX0pIC8vIEhMMQoKCWxvZy5QcmludGxuKCJMaXN0ZW5pbmcgb24gcG9ydCA4MDAwIikKCWh0dHAuTGlzdGVuQW5kU2VydmUoIjo4MDAwIiwgbmlsKQoKCS8vIFlvdSBjYW4gYWNjZXNzIGl0IGF0IGh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC8/bmFtZT1Kb2huCn0K"}],"Notes":["API =\u003e Application Programming Interface =\u003e Middleman for 2 services to communicate"],"Classes":null,"Styles":null},{"Number":[8],"Title":"How Your First API Works","ID":"","Elem":[{"Lines":["// fetch name query from the URL if not empty which is `John`\nname := r.URL.Query().Get(\"name\")"],"Pre":true,"Raw":"// fetch name query from the URL if not empty which is `John`\nname := r.URL.Query().Get(\"name\")"},{"Lines":["// check whether name is filled or not\nif name == \"\" {\n    name = \"World\"\n}"],"Pre":true,"Raw":"// check whether name is filled or not\nif name == \"\" {\n    name = \"World\"\n}"},{"Lines":["// write `Hello John!` using http.ResponseWriter\nfmt.Fprintf(w, \"Hello, %s!\", name)"],"Pre":true,"Raw":"// write `Hello John!` using http.ResponseWriter\nfmt.Fprintf(w, \"Hello, %s!\", name)"},{"Lines":["// Serve the API at http://localhost:8000\nhttp.ListenAndServe(\":8000\", nil)"],"Pre":true,"Raw":"// Serve the API at http://localhost:8000\nhttp.ListenAndServe(\":8000\", nil)\n"}],"Notes":null,"Classes":null,"Styles":null},{"Number":[9],"Title":"Your First API Response","ID":"","Elem":[{"Cmd":".image assets/your-first-api-response-1.png 200 600","URL":"assets/your-first-api-response-1.png","Width":600,"Height":200},{"Cmd":".image assets/your-first-api-response-2.png 200 600","URL":"assets/your-first-api-response-2.png","Width":600,"Height":200}],"Notes":null,"Classes":null,"Styles":null},{"Number":[10],"Title":"Semantics","ID":"","Elem":null,"Notes":null,"Classes":null,"Styles":null},{"Number":[11],"Title":"How Others can Use Your API?","ID":"","Elem":[{"Lines":["Path\n- /\n- /v1/tasks/\n- /this/is/path/to/the-resources/"],"Pre":true,"Raw":"Path\n- /\n- /v1/tasks/\n- /this/is/path/to/the-resources/"},{"Lines":["HTTP Method\n- GET\n- POST\n- PUT\n- PATCH\n- DELETE\n- HEAD\n- OPTIONS"],"Pre":true,"Raw":"HTTP Method\n- GET\n- POST\n- PUT\n- PATCH\n- DELETE\n- HEAD\n- OPTIONS\n"}],"Notes":null,"Classes":null,"Styles":null},{"Number":[12],"Title":"HTTP Method Usage","ID":"","Elem":[{"Cmd":".code assets/http-method-table.txt.ascii","Text":"\n\u003cpre\u003e\u003cspan num=\"1\"\u003e\u0026#43;-------------\u0026#43;-------------------\u0026#43;\u003c/span\u003e\n\u003cspan num=\"2\"\u003e| HTTP Method |       Usage       |\u003c/span\u003e\n\u003cspan num=\"3\"\u003e| =========== | ================= |\u003c/span\u003e\n\u003cspan num=\"4\"\u003e|     GET     |  fetch resources  |\u003c/span\u003e\n\u003cspan num=\"5\"\u003e|    POST     |  store resources  |\u003c/span\u003e\n\u003cspan num=\"6\"\u003e|     PUT     |  upsert resources |\u003c/span\u003e\n\u003cspan num=\"7\"\u003e|    PATCH    |  update resources |\u003c/span\u003e\n\u003cspan num=\"8\"\u003e|   DELETE    | destroy resources |\u003c/span\u003e\n\u003cspan num=\"9\"\u003e|    HEAD     |   fetch metadata  |\u003c/span\u003e\n\u003cspan num=\"10\"\u003e|   OPTIONS   | preflight request |\u003c/span\u003e\n\u003cspan num=\"11\"\u003e\u0026#43;-------------\u0026#43;-------------------\u0026#43;\u003c/span\u003e\n\u003c/pre\u003e\n","Play":false,"Edit":false,"FileName":"http-method-table.txt.ascii","Ext":".ascii","Raw":"Ky0tLS0tLS0tLS0tLS0rLS0tLS0tLS0tLS0tLS0tLS0tLSsKfCBIVFRQIE1ldGhvZCB8ICAgICAgIFVzYWdlICAgICAgIHwKfCA9PT09PT09PT09PSB8ID09PT09PT09PT09PT09PT09IHwKfCAgICAgR0VUICAgICB8ICBmZXRjaCByZXNvdXJjZXMgIHwKfCAgICBQT1NUICAgICB8ICBzdG9yZSByZXNvdXJjZXMgIHwKfCAgICAgUFVUICAgICB8ICB1cHNlcnQgcmVzb3VyY2VzIHwKfCAgICBQQVRDSCAgICB8ICB1cGRhdGUgcmVzb3VyY2VzIHwKfCAgIERFTEVURSAgICB8IGRlc3Ryb3kgcmVzb3VyY2VzIHwKfCAgICBIRUFEICAgICB8ICAgZmV0Y2ggbWV0YWRhdGEgIHwKfCAgIE9QVElPTlMgICB8IHByZWZsaWdodCByZXF1ZXN0IHwKKy0tLS0tLS0tLS0tLS0rLS0tLS0tLS0tLS0tLS0tLS0tLSsK"}],"Notes":null,"Classes":null,"Styles":null},{"Number":[13],"Title":"HTTP Request","ID":"","Elem":[{"Lines":["*Query* *Parameter*"],"Pre":false,"Raw":""},{"Cmd":".code -edit assets/http-request.txt /^START QUERY/,/^END QUERY/","Text":"\n\u003cpre contenteditable=\"true\" spellcheck=\"false\"\u003e\u003cspan num=\"2\"\u003ehttps://jsonplaceholder.typicode.com/posts?id=1\u003c/span\u003e\n\u003cspan num=\"3\"\u003ehttps://jsonplaceholder.typicode.com/posts?userId=1\u003c/span\u003e\n\u003c/pre\u003e\n","Play":false,"Edit":true,"FileName":"http-request.txt","Ext":".txt","Raw":"aHR0cHM6Ly9qc29ucGxhY2Vob2xkZXIudHlwaWNvZGUuY29tL3Bvc3RzP2lkPTEKaHR0cHM6Ly9qc29ucGxhY2Vob2xkZXIudHlwaWNvZGUuY29tL3Bvc3RzP3VzZXJJZD0xCg=="},{"Lines":["*Path* *Parameter*"],"Pre":false,"Raw":""},{"Cmd":".code -edit assets/http-request.txt /^START PATH/,/^END PATH/","Text":"\n\u003cpre contenteditable=\"true\" spellcheck=\"false\"\u003e\u003cspan num=\"7\"\u003ehttps://jsonplaceholder.typicode.com/posts/1/\u003c/span\u003e\n\u003cspan num=\"8\"\u003ehttps://jsonplaceholder.typicode.com/users/1/\u003c/span\u003e\n\u003c/pre\u003e\n","Play":false,"Edit":true,"FileName":"http-request.txt","Ext":".txt","Raw":"aHR0cHM6Ly9qc29ucGxhY2Vob2xkZXIudHlwaWNvZGUuY29tL3Bvc3RzLzEvCmh0dHBzOi8vanNvbnBsYWNlaG9sZGVyLnR5cGljb2RlLmNvbS91c2Vycy8xLwo="},{"Lines":["*Request* *Body*"],"Pre":false,"Raw":""},{"Cmd":".code -edit assets/http-request.txt /^START BODY/,/^END BODY/","Text":"\n\u003cpre contenteditable=\"true\" spellcheck=\"false\"\u003e\u003cspan num=\"12\"\u003ecurl -sXPOST \u0026#39;https://jsonplaceholder.typicode.com/posts\u0026#39; \\\u003c/span\u003e\n\u003cspan num=\"13\"\u003e-H \u0026#34;Content-Type: application/json; charset=UTF-8\u0026#34; \\\u003c/span\u003e\n\u003cspan num=\"14\"\u003e-d \u0026#39;{\u003c/span\u003e\n\u003cspan num=\"15\"\u003e    \u0026#34;title\u0026#34;: \u0026#34;foo\u0026#34;,\u003c/span\u003e\n\u003cspan num=\"16\"\u003e    \u0026#34;body\u0026#34;: \u0026#34;bar\u0026#34;,\u003c/span\u003e\n\u003cspan num=\"17\"\u003e    \u0026#34;userId\u0026#34;: 1\u003c/span\u003e\n\u003cspan num=\"18\"\u003e}\u0026#39;\u003c/span\u003e\n\u003c/pre\u003e\n","Play":false,"Edit":true,"FileName":"http-request.txt","Ext":".txt","Raw":"Y3VybCAtc1hQT1NUICdodHRwczovL2pzb25wbGFjZWhvbGRlci50eXBpY29kZS5jb20vcG9zdHMnIFwKLUggIkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vanNvbjsgY2hhcnNldD1VVEYtOCIgXAotZCAnewogICAgInRpdGxlIjogImZvbyIsCiAgICAiYm9keSI6ICJiYXIiLAogICAgInVzZXJJZCI6IDEKfScK"}],"Notes":null,"Classes":null,"Styles":null},{"Number":[14],"Title":"To Do API","ID":"","Elem":[{"Cmd":".code assets/to-do-api.txt.ascii","Text":"\n\u003cpre\u003e\u003cspan num=\"1\"\u003e\u0026#43;-------------------\u0026#43;-------------------\u0026#43;\u003c/span\u003e\n\u003cspan num=\"2\"\u003e|      Routes       |       Usage       |\u003c/span\u003e\n\u003cspan num=\"3\"\u003e| ================= | ================= |\u003c/span\u003e\n\u003cspan num=\"4\"\u003e|    GET /tasks/    |  fetch all tasks  |\u003c/span\u003e\n\u003cspan num=\"5\"\u003e|  GET /tasks/:id   |  fetch task by ID |\u003c/span\u003e\n\u003cspan num=\"6\"\u003e|   POST /tasks/    |  store resources  |\u003c/span\u003e\n\u003cspan num=\"7\"\u003e| PATCH /tasks/:id  |  update resources |\u003c/span\u003e\n\u003cspan num=\"8\"\u003e| DELETE /tasks/:id | destroy resources |\u003c/span\u003e\n\u003cspan num=\"9\"\u003e\u0026#43;-------------------\u0026#43;-------------------\u0026#43;\u003c/span\u003e\n\u003c/pre\u003e\n","Play":false,"Edit":false,"FileName":"to-do-api.txt.ascii","Ext":".ascii","Raw":"Ky0tLS0tLS0tLS0tLS0tLS0tLS0rLS0tLS0tLS0tLS0tLS0tLS0tLSsKfCAgICAgIFJvdXRlcyAgICAgICB8ICAgICAgIFVzYWdlICAgICAgIHwKfCA9PT09PT09PT09PT09PT09PSB8ID09PT09PT09PT09PT09PT09IHwKfCAgICBHRVQgL3Rhc2tzLyAgICB8ICBmZXRjaCBhbGwgdGFza3MgIHwKfCAgR0VUIC90YXNrcy86aWQgICB8ICBmZXRjaCB0YXNrIGJ5IElEIHwKfCAgIFBPU1QgL3Rhc2tzLyAgICB8ICBzdG9yZSByZXNvdXJjZXMgIHwKfCBQQVRDSCAvdGFza3MvOmlkICB8ICB1cGRhdGUgcmVzb3VyY2VzIHwKfCBERUxFVEUgL3Rhc2tzLzppZCB8IGRlc3Ryb3kgcmVzb3VyY2VzIHwKKy0tLS0tLS0tLS0tLS0tLS0tLS0rLS0tLS0tLS0tLS0tLS0tLS0tLSsK"}],"Notes":null,"Classes":null,"Styles":null},{"Number":[15],"Title":"Write Tasks Handler","ID":"","Elem":[{"Cmd":".code -edit assets/to-do-api.go","Text":"\n\u003cpre contenteditable=\"true\" spellcheck=\"false\"\u003e\u003cspan num=\"1\"\u003epackage main\u003c/span\u003e\n\u003cspan num=\"2\"\u003e\u003c/span\u003e\n\u003cspan num=\"3\"\u003eimport (\u003c/span\u003e\n\u003cspan num=\"4\"\u003e    \u0026#34;net/http\u0026#34;\u003c/span\u003e\n\u003cspan num=\"5\"\u003e)\u003c/span\u003e\n\u003cspan num=\"6\"\u003e\u003c/span\u003e\n\u003cspan num=\"7\"\u003efunc taskHandler(w http.ResponseWriter, r *http.Request) {\u003c/span\u003e\n\u003cspan num=\"8\"\u003e    switch r.Method {\u003c/span\u003e\n\u003cspan num=\"9\"\u003e    case http.MethodGet:\u003c/span\u003e\n\u003cspan num=\"10\"\u003e    case http.MethodPost:\u003c/span\u003e\n\u003cspan num=\"11\"\u003e    case http.MethodPatch:\u003c/span\u003e\n\u003cspan num=\"12\"\u003e    case http.MethodDelete:\u003c/span\u003e\n\u003cspan num=\"13\"\u003e    default:\u003c/span\u003e\n\u003cspan num=\"14\"\u003e        http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)\u003c/span\u003e\n\u003cspan num=\"15\"\u003e    }\u003c/span\u003e\n\u003cspan num=\"16\"\u003e}\u003c/span\u003e\n\u003cspan num=\"17\"\u003e\u003c/span\u003e\n\u003cspan num=\"18\"\u003efunc main() {\u003c/span\u003e\n\u003cspan num=\"19\"\u003e    http.HandleFunc(\u0026#34;/tasks/\u0026#34;, taskHandler)\u003c/span\u003e\n\u003cspan num=\"20\"\u003e    http.ListenAndServe(\u0026#34;:8000\u0026#34;, nil)\u003c/span\u003e\n\u003cspan num=\"21\"\u003e}\u003c/span\u003e\n\u003c/pre\u003e\n","Play":false,"Edit":true,"FileName":"to-do-api.go","Ext":".go","Raw":"cGFja2FnZSBtYWluCgppbXBvcnQgKAoJIm5ldC9odHRwIgopCgpmdW5jIHRhc2tIYW5kbGVyKHcgaHR0cC5SZXNwb25zZVdyaXRlciwgciAqaHR0cC5SZXF1ZXN0KSB7Cglzd2l0Y2ggci5NZXRob2QgewoJY2FzZSBodHRwLk1ldGhvZEdldDoKCWNhc2UgaHR0cC5NZXRob2RQb3N0OgoJY2FzZSBodHRwLk1ldGhvZFBhdGNoOgoJY2FzZSBodHRwLk1ldGhvZERlbGV0ZToKCWRlZmF1bHQ6CgkJaHR0cC5FcnJvcih3LCBodHRwLlN0YXR1c1RleHQoaHR0cC5TdGF0dXNNZXRob2ROb3RBbGxvd2VkKSwgaHR0cC5TdGF0dXNNZXRob2ROb3RBbGxvd2VkKQoJfQp9CgpmdW5jIG1haW4oKSB7CglodHRwLkhhbmRsZUZ1bmMoIi90YXNrcy8iLCB0YXNrSGFuZGxlcikKCWh0dHAuTGlzdGVuQW5kU2VydmUoIjo4MDAwIiwgbmlsKQp9Cg=="}],"Notes":null,"Classes":null,"Styles":null},{"Number":[16],"Title":"HTTP Status Code","ID":"","Elem":[{"Bullet":["1xx - Information","2xx - Success","3xx - Redirect","4xx - Client error","5xx - Server error"]}],"Notes":null,"Classes":null,"Styles":null},{"Number":[17],"Title":"Going Deeper","ID":"","Elem":null,"Notes":["Hands on to the real code here"],"Classes":null,"Styles":null},{"Number":[18],"Title":"Work Flow Diagram","ID":"","Elem":[{"Cmd":".image assets/graph.png","URL":"assets/graph.png","Width":0,"Height":0}],"Notes":null,"Classes":null,"Styles":null},{"Number":[19],"Title":"Single Responsibility / Separation of Concerns","ID":"","Elem":[{"Lines":["A class should have one and only one reason to change, meaning that a class should have only one\njob."],"Pre":true,"Raw":"A class should have one and only one reason to change, meaning that a class should have only one\njob.\n"},{"Cmd":".code assets/simple-implementation.go /START OMIT/,/END OMIT/","Text":"\n\u003cpre\u003e\u003cspan num=\"9\"\u003etype Repository struct {\u003c/span\u003e\n\u003cspan num=\"10\"\u003e    db *sql.DB // output\u003c/span\u003e\n\u003cspan num=\"11\"\u003e}\u003c/span\u003e\n\u003cspan num=\"12\"\u003e\u003c/span\u003e\n\u003cspan num=\"13\"\u003etype Service struct {\u003c/span\u003e\n\u003cspan num=\"14\"\u003e    repo *Repository // need repo\u003c/span\u003e\n\u003cspan num=\"15\"\u003e}\u003c/span\u003e\n\u003cspan num=\"16\"\u003e\u003c/span\u003e\n\u003cspan num=\"17\"\u003etype Transport struct {\u003c/span\u003e\n\u003cspan num=\"18\"\u003e    svc *Service // need svc\u003c/span\u003e\n\u003cspan num=\"19\"\u003e}\u003c/span\u003e\n\u003cspan num=\"20\"\u003e\u003c/span\u003e\n\u003cspan num=\"21\"\u003efunc main() {\u003c/span\u003e\n\u003cspan num=\"22\"\u003e    db, _ := sql.Open(\u0026#34;sqlite3\u0026#34;, \u0026#34;:memory:\u0026#34;) // open database connection\u003c/span\u003e\n\u003cspan num=\"23\"\u003e    repo := \u0026amp;Repository{db: db}              // create repository\u003c/span\u003e\n\u003cspan num=\"24\"\u003e    svc := \u0026amp;Service{repo: repo}              // create service\u003c/span\u003e\n\u003cspan num=\"25\"\u003e    trp := \u0026amp;Transport{svc: svc}              // create transport\u003c/span\u003e\n\u003cspan num=\"26\"\u003e\u003c/span\u003e\n\u003cspan num=\"27\"\u003e    http.ListenAndServe(\u0026#34;:8000\u0026#34;, trp) // listen for input at port 8000\u003c/span\u003e\n\u003cspan num=\"28\"\u003e}\u003c/span\u003e\n\u003c/pre\u003e\n","Play":false,"Edit":false,"FileName":"simple-implementation.go","Ext":".go","Raw":"dHlwZSBSZXBvc2l0b3J5IHN0cnVjdCB7CglkYiAqc3FsLkRCIC8vIG91dHB1dAp9Cgp0eXBlIFNlcnZpY2Ugc3RydWN0IHsKCXJlcG8gKlJlcG9zaXRvcnkgLy8gbmVlZCByZXBvCn0KCnR5cGUgVHJhbnNwb3J0IHN0cnVjdCB7CglzdmMgKlNlcnZpY2UgLy8gbmVlZCBzdmMKfQoKZnVuYyBtYWluKCkgewoJZGIsIF8gOj0gc3FsLk9wZW4oInNxbGl0ZTMiLCAiOm1lbW9yeToiKSAvLyBvcGVuIGRhdGFiYXNlIGNvbm5lY3Rpb24KCXJlcG8gOj0gJlJlcG9zaXRvcnl7ZGI6IGRifSAgICAgICAgICAgICAgLy8gY3JlYXRlIHJlcG9zaXRvcnkKCXN2YyA6PSAmU2VydmljZXtyZXBvOiByZXBvfSAgICAgICAgICAgICAgLy8gY3JlYXRlIHNlcnZpY2UKCXRycCA6PSAmVHJhbnNwb3J0e3N2Yzogc3ZjfSAgICAgICAgICAgICAgLy8gY3JlYXRlIHRyYW5zcG9ydAoKCWh0dHAuTGlzdGVuQW5kU2VydmUoIjo4MDAwIiwgdHJwKSAvLyBsaXN0ZW4gZm9yIGlucHV0IGF0IHBvcnQgODAwMAp9Cg=="}],"Notes":null,"Classes":null,"Styles":null},{"Number":[20],"Title":"Dependency Inversion","ID":"","Elem":[{"Lines":["Entities must depend on abstractions, not on concretions. It states that the high-level module\nmust not depend on the low-level module, but they should depend on abstractions. To simplify,\nDependency Inversion makes all the components don't need to know the details of other components\nand gives them more freedom to choose their dependencies implementation."],"Pre":true,"Raw":"Entities must depend on abstractions, not on concretions. It states that the high-level module\nmust not depend on the low-level module, but they should depend on abstractions. To simplify,\nDependency Inversion makes all the components don't need to know the details of other components\nand gives them more freedom to choose their dependencies implementation.\n"},{"Cmd":".code assets/dependency-inversion.go HL1","Text":"\n\u003cpre\u003e\u003cspan num=\"1\"\u003etype TaskRepository interface {\u003c/span\u003e\n\u003cspan num=\"2\"\u003e    Fetch() ([]*Task, error)\u003c/span\u003e\n\u003cspan num=\"3\"\u003e}\u003c/span\u003e\n\u003cspan num=\"4\"\u003e\u003c/span\u003e\n\u003cspan num=\"5\"\u003etype TaskRepoPostgresql struct{}\u003c/span\u003e\n\u003cspan num=\"6\"\u003e\u003c/span\u003e\n\u003cspan num=\"7\"\u003efunc (p TaskRepoPostgresql) Fetch() ([]*Task, error) {}\u003c/span\u003e\n\u003cspan num=\"8\"\u003e\u003c/span\u003e\n\u003cspan num=\"9\"\u003etype TaskRepoVendor struct{}\u003c/span\u003e\n\u003cspan num=\"10\"\u003e\u003c/span\u003e\n\u003cspan num=\"11\"\u003efunc (v TaskRepoVendor) Fetch() ([]*Task, error) {}\u003c/span\u003e\n\u003cspan num=\"12\"\u003e\u003c/span\u003e\n\u003cspan num=\"13\"\u003e\u003cb\u003etype TaskService struct {\u003c/b\u003e\u003c/span\u003e\n\u003cspan num=\"14\"\u003e    \u003cb\u003e// don\u0026#39;t need to know whether it\u0026#39;s Postgresql or Vendor\u003c/b\u003e\u003c/span\u003e\n\u003cspan num=\"15\"\u003e    \u003cb\u003e// gives dependants more freedom to choose the TaskRepository implementation\u003c/b\u003e\u003c/span\u003e\n\u003cspan num=\"16\"\u003e    \u003cb\u003erepo TaskRepository\u003c/b\u003e\u003c/span\u003e\n\u003cspan num=\"17\"\u003e\u003cb\u003e}\u003c/b\u003e\u003c/span\u003e\n\u003c/pre\u003e\n","Play":false,"Edit":false,"FileName":"dependency-inversion.go","Ext":".go","Raw":"dHlwZSBUYXNrUmVwb3NpdG9yeSBpbnRlcmZhY2UgewoJRmV0Y2goKSAoW10qVGFzaywgZXJyb3IpCn0KCnR5cGUgVGFza1JlcG9Qb3N0Z3Jlc3FsIHN0cnVjdHt9CgpmdW5jIChwIFRhc2tSZXBvUG9zdGdyZXNxbCkgRmV0Y2goKSAoW10qVGFzaywgZXJyb3IpIHt9Cgp0eXBlIFRhc2tSZXBvVmVuZG9yIHN0cnVjdHt9CgpmdW5jICh2IFRhc2tSZXBvVmVuZG9yKSBGZXRjaCgpIChbXSpUYXNrLCBlcnJvcikge30KCnR5cGUgVGFza1NlcnZpY2Ugc3RydWN0IHsgLy8gSEwxCgkvLyBkb24ndCBuZWVkIHRvIGtub3cgd2hldGhlciBpdCdzIFBvc3RncmVzcWwgb3IgVmVuZG9yIC8vIEhMMQoJLy8gZ2l2ZXMgZGVwZW5kYW50cyBtb3JlIGZyZWVkb20gdG8gY2hvb3NlIHRoZSBUYXNrUmVwb3NpdG9yeSBpbXBsZW1lbnRhdGlvbiAvLyBITDEKCXJlcG8gVGFza1JlcG9zaXRvcnkgLy8gSEwxCn0gLy8gSEwxCg=="}],"Notes":null,"Classes":null,"Styles":null},{"Number":[21],"Title":"Connecting to the Database","ID":"","Elem":[{"Cmd":".code -edit assets/connecting-to-the-database.go HL1","Text":"\n\u003cpre contenteditable=\"true\" spellcheck=\"false\"\u003e\u003cspan num=\"1\"\u003econst (\u003c/span\u003e\n\u003cspan num=\"2\"\u003e    queryMigrate string = `CREATE TABLE IF NOT EXISTS tasks(\u003c/span\u003e\n\u003cspan num=\"3\"\u003e        id TEXT PRIMARY KEY,\u003c/span\u003e\n\u003cspan num=\"4\"\u003e        name TEXT NOT NULL UNIQUE,\u003c/span\u003e\n\u003cspan num=\"5\"\u003e        is_active BOOLEAN NOT NULL DEFAULT TRUE\u003c/span\u003e\n\u003cspan num=\"6\"\u003e    )`\u003c/span\u003e\n\u003cspan num=\"7\"\u003e\u003c/span\u003e\n\u003cspan num=\"8\"\u003e    querySeed string = `INSERT INTO tasks (id, name) VALUES(\u0026#39;seed1\u0026#39;, \u0026#39;task seed 1\u0026#39;)`\u003c/span\u003e\n\u003cspan num=\"9\"\u003e)\u003c/span\u003e\n\u003cspan num=\"10\"\u003e\u003c/span\u003e\n\u003cspan num=\"11\"\u003e\u003cb\u003e// this function is simplified\u003c/b\u003e\u003c/span\u003e\n\u003cspan num=\"12\"\u003e\u003cb\u003e// please don\u0026#39;t use this function in production\u003c/b\u003e\u003c/span\u003e\n\u003cspan num=\"13\"\u003efunc initializeDatabase() *sql.DB {\u003c/span\u003e\n\u003cspan num=\"14\"\u003e    db, _ := sql.Open(\u0026#34;sqlite3\u0026#34;, \u0026#34;:memory:\u0026#34;)\u003c/span\u003e\n\u003cspan num=\"15\"\u003e    db.Exec(queryMigrate)\u003c/span\u003e\n\u003cspan num=\"16\"\u003e    db.Exec(querySeed)\u003c/span\u003e\n\u003cspan num=\"17\"\u003e    return db\u003c/span\u003e\n\u003cspan num=\"18\"\u003e}\u003c/span\u003e\n\u003c/pre\u003e\n","Play":false,"Edit":true,"FileName":"connecting-to-the-database.go","Ext":".go","Raw":"Y29uc3QgKAoJcXVlcnlNaWdyYXRlIHN0cmluZyA9IGBDUkVBVEUgVEFCTEUgSUYgTk9UIEVYSVNUUyB0YXNrcygKICAgICAgICBpZCBURVhUIFBSSU1BUlkgS0VZLAogICAgICAgIG5hbWUgVEVYVCBOT1QgTlVMTCBVTklRVUUsCiAgICAgICAgaXNfYWN0aXZlIEJPT0xFQU4gTk9UIE5VTEwgREVGQVVMVCBUUlVFCiAgICApYAoKCXF1ZXJ5U2VlZCBzdHJpbmcgPSBgSU5TRVJUIElOVE8gdGFza3MgKGlkLCBuYW1lKSBWQUxVRVMoJ3NlZWQxJywgJ3Rhc2sgc2VlZCAxJylgCikKCi8vIHRoaXMgZnVuY3Rpb24gaXMgc2ltcGxpZmllZCAvLyBITDEKLy8gcGxlYXNlIGRvbid0IHVzZSB0aGlzIGZ1bmN0aW9uIGluIHByb2R1Y3Rpb24gLy8gSEwxCmZ1bmMgaW5pdGlhbGl6ZURhdGFiYXNlKCkgKnNxbC5EQiB7CglkYiwgXyA6PSBzcWwuT3Blbigic3FsaXRlMyIsICI6bWVtb3J5OiIpCglkYi5FeGVjKHF1ZXJ5TWlncmF0ZSkKCWRiLkV4ZWMocXVlcnlTZWVkKQoJcmV0dXJuIGRiCn0K"}],"Notes":null,"Classes":null,"Styles":null},{"Number":[22],"Title":"Directory Structure","ID":"","Elem":[{"Cmd":".code assets/directory-structure.txt","Text":"\n\u003cpre\u003e\u003cspan num=\"1\"\u003e.\u003c/span\u003e\n\u003cspan num=\"2\"\u003e├── cmd\u003c/span\u003e\n\u003cspan num=\"3\"\u003e│   └── http\u003c/span\u003e\n\u003cspan num=\"4\"\u003e│       └── main.go\u003c/span\u003e\n\u003cspan num=\"5\"\u003e├── domain\u003c/span\u003e\n\u003cspan num=\"6\"\u003e│   └── task.go\u003c/span\u003e\n\u003cspan num=\"7\"\u003e└── task\u003c/span\u003e\n\u003cspan num=\"8\"\u003e    ├── provider.go\u003c/span\u003e\n\u003cspan num=\"9\"\u003e    ├── repository_sqlite.go\u003c/span\u003e\n\u003cspan num=\"10\"\u003e    ├── service.go\u003c/span\u003e\n\u003cspan num=\"11\"\u003e    └── transport_http.go\u003c/span\u003e\n\u003c/pre\u003e\n","Play":false,"Edit":false,"FileName":"directory-structure.txt","Ext":".txt","Raw":"LgrilJzilIDilIAgY21kCuKUgsKgwqAg4pSU4pSA4pSAIGh0dHAK4pSCwqDCoCAgICAg4pSU4pSA4pSAIG1haW4uZ28K4pSc4pSA4pSAIGRvbWFpbgrilILCoMKgIOKUlOKUgOKUgCB0YXNrLmdvCuKUlOKUgOKUgCB0YXNrCiDCoMKgIOKUnOKUgOKUgCBwcm92aWRlci5nbwogwqDCoCDilJzilIDilIAgcmVwb3NpdG9yeV9zcWxpdGUuZ28KIMKgwqAg4pSc4pSA4pSAIHNlcnZpY2UuZ28KIMKgwqAg4pSU4pSA4pSAIHRyYW5zcG9ydF9odHRwLmdvCg=="},{"Lines":["cmd/       - to put your application command (http, cli, grpc)\ndomain/    - to put your application entities, specification, models and interfaces\n             (task, user, product, etc)\ntask/      - to put your task entity implementation, if you have user entity, then create user\n             directory\nprovider   - to put your dependency provider (constructor) here, will works along with dependency\n             injection\nrepository - to put your repository implementation (sqlite, mysql, external service)\nservice    - to put your business \u0026 application logic\ntransport  - to put your transport implementation (http, cli, grpc)"],"Pre":true,"Raw":"cmd/       - to put your application command (http, cli, grpc)\ndomain/    - to put your application entities, specification, models and interfaces\n             (task, user, product, etc)\ntask/      - to put your task entity implementation, if you have user entity, then create user\n             directory\nprovider   - to put your dependency provider (constructor) here, will works along with dependency\n             injection\nrepository - to put your repository implementation (sqlite, mysql, external service)\nservice    - to put your business \u0026 application logic\ntransport  - to put your transport implementation (http, cli, grpc)\n"}],"Notes":null,"Classes":null,"Styles":null},{"Number":[23],"Title":"Fetch All Tasks Test","ID":"","Elem":[{"Lines":["./cmd/fetch-example/main.go"],"Pre":true,"Raw":"./cmd/fetch-example/main.go\n"},{"Cmd":".code -edit assets/fetch-all-tasks-test.go","Text":"\n\u003cpre contenteditable=\"true\" spellcheck=\"false\"\u003e\u003cspan num=\"1\"\u003epackage main\u003c/span\u003e\n\u003cspan num=\"2\"\u003e\u003c/span\u003e\n\u003cspan num=\"3\"\u003eimport (\u003c/span\u003e\n\u003cspan num=\"4\"\u003e    \u0026#34;fmt\u0026#34;\u003c/span\u003e\n\u003cspan num=\"5\"\u003e    \u0026#34;io\u0026#34;\u003c/span\u003e\n\u003cspan num=\"6\"\u003e    \u0026#34;net/http\u0026#34;\u003c/span\u003e\n\u003cspan num=\"7\"\u003e)\u003c/span\u003e\n\u003cspan num=\"8\"\u003e\u003c/span\u003e\n\u003cspan num=\"9\"\u003efunc main() {\u003c/span\u003e\n\u003cspan num=\"10\"\u003e    resp, _ := http.Get(\u0026#34;http://localhost:8000/tasks/\u0026#34;)\u003c/span\u003e\n\u003cspan num=\"11\"\u003e    defer resp.Body.Close()\u003c/span\u003e\n\u003cspan num=\"12\"\u003e    b, _ := io.ReadAll(resp.Body)\u003c/span\u003e\n\u003cspan num=\"13\"\u003e    fmt.Println(string(b))\u003c/span\u003e\n\u003cspan num=\"14\"\u003e}\u003c/span\u003e\n\u003c/pre\u003e\n","Play":false,"Edit":true,"FileName":"fetch-all-tasks-test.go","Ext":".go","Raw":"cGFja2FnZSBtYWluCgppbXBvcnQgKAoJImZtdCIKCSJpbyIKCSJuZXQvaHR0cCIKKQoKZnVuYyBtYWluKCkgewoJcmVzcCwgXyA6PSBodHRwLkdldCgiaHR0cDovL2xvY2FsaG9zdDo4MDAwL3Rhc2tzLyIpCglkZWZlciByZXNwLkJvZHkuQ2xvc2UoKQoJYiwgXyA6PSBpby5SZWFkQWxsKHJlc3AuQm9keSkKCWZtdC5QcmludGxuKHN0cmluZyhiKSkKfQo="}],"Notes":null,"Classes":null,"Styles":null},{"Number":[24],"Title":"Store Task Test","ID":"","Elem":[{"Lines":["./cmd/store-example/main.go"],"Pre":true,"Raw":"./cmd/store-example/main.go\n"},{"Cmd":".code -edit assets/store-test.go","Text":"\n\u003cpre contenteditable=\"true\" spellcheck=\"false\"\u003e\u003cspan num=\"1\"\u003epackage main\u003c/span\u003e\n\u003cspan num=\"2\"\u003e\u003c/span\u003e\n\u003cspan num=\"3\"\u003eimport (\u003c/span\u003e\n\u003cspan num=\"4\"\u003e    \u0026#34;fmt\u0026#34;\u003c/span\u003e\n\u003cspan num=\"5\"\u003e    \u0026#34;io\u0026#34;\u003c/span\u003e\n\u003cspan num=\"6\"\u003e    \u0026#34;math/rand\u0026#34;\u003c/span\u003e\n\u003cspan num=\"7\"\u003e    \u0026#34;net/http\u0026#34;\u003c/span\u003e\n\u003cspan num=\"8\"\u003e    \u0026#34;strings\u0026#34;\u003c/span\u003e\n\u003cspan num=\"9\"\u003e    \u0026#34;time\u0026#34;\u003c/span\u003e\n\u003cspan num=\"10\"\u003e)\u003c/span\u003e\n\u003cspan num=\"11\"\u003e\u003c/span\u003e\n\u003cspan num=\"12\"\u003efunc main() {\u003c/span\u003e\n\u003cspan num=\"13\"\u003e    rand.Seed(time.Now().UnixNano())\u003c/span\u003e\n\u003cspan num=\"14\"\u003e    suffix := rand.Intn(1000)\u003c/span\u003e\n\u003cspan num=\"15\"\u003e    payload := fmt.Sprintf(`{\u0026#34;name\u0026#34;: \u0026#34;testing demo %04d\u0026#34;}`, suffix)\u003c/span\u003e\n\u003cspan num=\"16\"\u003e    body := strings.NewReader(payload)\u003c/span\u003e\n\u003cspan num=\"17\"\u003e    resp, _ := http.Post(\u0026#34;http://localhost:8000/tasks/\u0026#34;, \u0026#34;application/json\u0026#34;, body)\u003c/span\u003e\n\u003cspan num=\"18\"\u003e    defer resp.Body.Close()\u003c/span\u003e\n\u003cspan num=\"19\"\u003e    b, _ := io.ReadAll(resp.Body)\u003c/span\u003e\n\u003cspan num=\"20\"\u003e    fmt.Println(string(b))\u003c/span\u003e\n\u003cspan num=\"21\"\u003e}\u003c/span\u003e\n\u003c/pre\u003e\n","Play":false,"Edit":true,"FileName":"store-test.go","Ext":".go","Raw":"cGFja2FnZSBtYWluCgppbXBvcnQgKAoJImZtdCIKCSJpbyIKCSJtYXRoL3JhbmQiCgkibmV0L2h0dHAiCgkic3RyaW5ncyIKCSJ0aW1lIgopCgpmdW5jIG1haW4oKSB7CglyYW5kLlNlZWQodGltZS5Ob3coKS5Vbml4TmFubygpKQoJc3VmZml4IDo9IHJhbmQuSW50bigxMDAwKQoJcGF5bG9hZCA6PSBmbXQuU3ByaW50ZihgeyJuYW1lIjogInRlc3RpbmcgZGVtbyAlMDRkIn1gLCBzdWZmaXgpCglib2R5IDo9IHN0cmluZ3MuTmV3UmVhZGVyKHBheWxvYWQpCglyZXNwLCBfIDo9IGh0dHAuUG9zdCgiaHR0cDovL2xvY2FsaG9zdDo4MDAwL3Rhc2tzLyIsICJhcHBsaWNhdGlvbi9qc29uIiwgYm9keSkKCWRlZmVyIHJlc3AuQm9keS5DbG9zZSgpCgliLCBfIDo9IGlvLlJlYWRBbGwocmVzcC5Cb2R5KQoJZm10LlByaW50bG4oc3RyaW5nKGIpKQp9Cg=="}],"Notes":null,"Classes":null,"Styles":null},{"Number":[25],"Title":"Going Beyond","ID":"","Elem":null,"Notes":["- Testing","- Dependency Injection","- Authentication \u0026 Authorization","- Versioning","- CORS"],"Classes":null,"Styles":null},{"Number":[26],"Title":"Conclusion","ID":"","Elem":[{"Bullet":["It is better to write a semantic API","Dependency Inversion gives you a freedom to choose and create an implementation","Single Responsibility gives you a clear insight what tasks are assign to which structs","It is still better to construct your project repository according your needs"]}],"Notes":null,"Classes":null,"Styles":null},{"Number":[27],"Title":"References","ID":"","Elem":[{"Bullet":["[[https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html]]","[[https://clavinjune.dev/en/blogs/golang-dependency-injection-using-wire/]]","[[https://clavinjune.dev/en/blogs/this-is-why-you-should-learn-golang/]]","[[https://digitalocean.com/community/conceptual_articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design/]]","[[https://jsonplaceholder.typicode.com/]]","[[https://martinfowler.com/articles/injection.html]]"]}],"Notes":null,"Classes":null,"Styles":null},{"Number":[28],"Title":"Google Form to Know Me Well","ID":"","Elem":[{"Cmd":".iframe https://docs.google.com/forms/d/e/1FAIpQLSfKEJKy1SKAnutWdlc3DyhrHKhLD1P4v8Wl3-VLQH5mLxn0lA/viewform?embedded=true 635 935","URL":"https://docs.google.com/forms/d/e/1FAIpQLSfKEJKy1SKAnutWdlc3DyhrHKhLD1P4v8Wl3-VLQH5mLxn0lA/viewform?embedded=true","Width":935,"Height":635}],"Notes":["gform https://forms.gle/291ijf6vfvKisBxB7/"],"Classes":null,"Styles":null}];
+      var titleNotes =  null 
+    </script>
+    <script src="./Developing API Services With Golang_files/notes.js"></script>
+    
+
+    <script>
+      
+      if (window["location"] && window["location"]["hostname"] == "talks.golang.org") {
+        var _gaq = _gaq || [];
+        _gaq.push(["_setAccount", "UA-11222381-6"]);
+        _gaq.push(["b._setAccount", "UA-49880327-6"]);
+        window.trackPageview = function() {
+          _gaq.push(["_trackPageview", location.pathname+location.hash]);
+          _gaq.push(["b._trackPageview", location.pathname+location.hash]);
+        };
+        window.trackPageview();
+        window.trackEvent = function(category, action, opt_label, opt_value, opt_noninteraction) {
+          _gaq.push(["_trackEvent", category, action, opt_label, opt_value, opt_noninteraction]);
+          _gaq.push(["b._trackEvent", category, action, opt_label, opt_value, opt_noninteraction]);
+        };
+      }
+    </script>
+  <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1"><meta name="apple-mobile-web-app-capable" content="yes"></head>
+
+  <body style="display: none" class="loaded">
+
+    <section class="slides layout-widescreen">
+
+      <article class="current">
+        <h1>Developing API Services With Golang</h1>
+        <h3>Aug 2022 @ Find IT Geek</h3>
+        
+        
+          <div class="presenter">
+            
+  
+  <p>
+    Clavin June
+  </p>
+  
+
+  
+  <p>
+    Software Engineer, Technology Company
+  </p>
+  
+
+          </div>
+        
+      </article>
+
+  
+  
+      <article class="next">
+      
+        <h2>Introduction</h2>
+      
+      <span class="pagenumber">2</span>
+      </article>
+  
+  
+  
+      <article class="far-next">
+      
+        <h3>Google Form to Know You Well</h3>
+        
+<iframe src="./Developing API Services With Golang_files/viewform.html" height="635" width="935"></iframe>
+
+      
+      <span class="pagenumber">3</span>
+      </article>
+  
+  
+  
+      <article class="">
+      
+        <h3>Resources</h3>
+        
+  
+  <p>
+    Source Code: <a href="https://github.com/anon-org/developing-api-services-with-golang/" target="_blank">github.com/anon-org/developing-api-services-with-golang/</a>
+<br>
+
+    Presentation: <a href="https://presents.clavinjune.dev/" target="_blank">presents.clavinjune.dev/</a> or <a href="https://clavinjune.dev/fig-aug-22/" target="_blank">clavinjune.dev/fig-aug-22/</a>
+  </p>
+  
+
+      
+      <span class="pagenumber">4</span>
+      </article>
+  
+  
+  
+      <article class="">
+      
+        <h3>Prerequisites</h3>
+        
+  <ul>
+  
+    <li>Golang has been Installed in Your Machine</li>
+  
+    <li>Your preferrable IDE / Text Editor</li>
+  
+    <li>Know Basic Web / Browser / Internet</li>
+  
+    <li>Know Basic Go Programming Language</li>
+  
+    <li>Know Basic SQL Query Would be Helpful</li>
+  
+  </ul>
+
+      
+      <span class="pagenumber">5</span>
+      </article>
+  
+  
+  
+      <article class="">
+      
+        <h3>What You'll Learn</h3>
+        
+  <ul>
+  
+    <li>Introduction to API Development with Golang</li>
+  
+    <li>Structurize your Golang Application Project</li>
+  
+    <li>Single Responsibility Principle / Separation of Concerns</li>
+  
+    <li>Dependency Inversion Principle</li>
+  
+  </ul>
+
+      
+      <span class="pagenumber">6</span>
+      </article>
+  
+  
+  
+      <article class="">
+      
+        <h2>Warming Up</h2>
+      
+      <span class="pagenumber">7</span>
+      </article>
+  
+  
+  
+      <article class="">
+      
+        <h3>Your First API</h3>
+        
+  <div class="code" contenteditable="true" spellcheck="false">
+<pre contenteditable="true" spellcheck="false"><span num="1">package main</span>
+<span num="2"></span>
+<span num="3">import (</span>
+<span num="4">    "fmt"</span>
+<span num="5">    "log"</span>
+<span num="6">    "net/http"</span>
+<span num="7">)</span>
+<span num="8"></span>
+<span num="9">func main() {</span>
+<span num="10">    <b>http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {</b></span>
+<span num="11">        <b>name := r.URL.Query().Get("name")</b></span>
+<span num="12">        <b>if name == "" {</b></span>
+<span num="13">            <b>name = "World"</b></span>
+<span num="14">        <b>}</b></span>
+<span num="15"></span>
+<span num="16">        <b>fmt.Fprintf(w, "Hello, %s!", name)</b></span>
+<span num="17">    <b>})</b></span>
+<span num="18"></span>
+<span num="19">    log.Println("Listening on port 8000")</span>
+<span num="20">    http.ListenAndServe(":8000", nil)</span>
+<span num="21"></span>
+<span num="22">    // You can access it at http://localhost:8000/?name=John</span>
+<span num="23">}</span>
+</pre>
+</div>
+
+      
+      <span class="pagenumber">8</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>How Your First API Works</h3>
+        
+  
+  <div class="code"><pre>// fetch name query from the URL if not empty which is `John`
+name := r.URL.Query().Get("name")</pre></div>
+  
+
+  
+  <div class="code"><pre>// check whether name is filled or not
+if name == "" {
+    name = "World"
+}</pre></div>
+  
+
+  
+  <div class="code"><pre>// write `Hello John!` using http.ResponseWriter
+fmt.Fprintf(w, "Hello, %s!", name)</pre></div>
+  
+
+  
+  <div class="code"><pre>// Serve the API at http://localhost:8000
+http.ListenAndServe(":8000", nil)</pre></div>
+  
+
+      
+      <span class="pagenumber">9</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Your First API Response</h3>
+        
+<div class="image">
+  <img src="./Developing API Services With Golang_files/your-first-api-response-1.png" height="200" width="600">
+</div>
+
+<div class="image">
+  <img src="./Developing API Services With Golang_files/your-first-api-response-2.png" height="200" width="600">
+</div>
+
+      
+      <span class="pagenumber">10</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h2>Semantics</h2>
+      
+      <span class="pagenumber">11</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>How Others can Use Your API?</h3>
+        
+  
+  <div class="code"><pre>Path
+- /
+- /v1/tasks/
+- /this/is/path/to/the-resources/</pre></div>
+  
+
+  
+  <div class="code"><pre>HTTP Method
+- GET
+- POST
+- PUT
+- PATCH
+- DELETE
+- HEAD
+- OPTIONS</pre></div>
+  
+
+      
+      <span class="pagenumber">12</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>HTTP Method Usage</h3>
+        
+  <div class="code">
+<pre><span num="1">+-------------+-------------------+</span>
+<span num="2">| HTTP Method |       Usage       |</span>
+<span num="3">| =========== | ================= |</span>
+<span num="4">|     GET     |  fetch resources  |</span>
+<span num="5">|    POST     |  store resources  |</span>
+<span num="6">|     PUT     |  upsert resources |</span>
+<span num="7">|    PATCH    |  update resources |</span>
+<span num="8">|   DELETE    | destroy resources |</span>
+<span num="9">|    HEAD     |   fetch metadata  |</span>
+<span num="10">|   OPTIONS   | preflight request |</span>
+<span num="11">+-------------+-------------------+</span>
+</pre>
+</div>
+
+      
+      <span class="pagenumber">13</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>HTTP Request</h3>
+        
+  
+  <p>
+    <b>Query</b> <b>Parameter</b>
+  </p>
+  
+
+  <div class="code" contenteditable="true" spellcheck="false">
+<pre contenteditable="true" spellcheck="false"><span num="2">https://jsonplaceholder.typicode.com/posts?id=1</span>
+<span num="3">https://jsonplaceholder.typicode.com/posts?userId=1</span>
+</pre>
+</div>
+
+  
+  <p>
+    <b>Path</b> <b>Parameter</b>
+  </p>
+  
+
+  <div class="code" contenteditable="true" spellcheck="false">
+<pre contenteditable="true" spellcheck="false"><span num="7">https://jsonplaceholder.typicode.com/posts/1/</span>
+<span num="8">https://jsonplaceholder.typicode.com/users/1/</span>
+</pre>
+</div>
+
+  
+  <p>
+    <b>Request</b> <b>Body</b>
+  </p>
+  
+
+  <div class="code" contenteditable="true" spellcheck="false">
+<pre contenteditable="true" spellcheck="false"><span num="12">curl -sXPOST 'https://jsonplaceholder.typicode.com/posts' \</span>
+<span num="13">-H "Content-Type: application/json; charset=UTF-8" \</span>
+<span num="14">-d '{</span>
+<span num="15">    "title": "foo",</span>
+<span num="16">    "body": "bar",</span>
+<span num="17">    "userId": 1</span>
+<span num="18">}'</span>
+</pre>
+</div>
+
+      
+      <span class="pagenumber">14</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>To Do API</h3>
+        
+  <div class="code">
+<pre><span num="1">+-------------------+-------------------+</span>
+<span num="2">|      Routes       |       Usage       |</span>
+<span num="3">| ================= | ================= |</span>
+<span num="4">|    GET /tasks/    |  fetch all tasks  |</span>
+<span num="5">|  GET /tasks/:id   |  fetch task by ID |</span>
+<span num="6">|   POST /tasks/    |  store resources  |</span>
+<span num="7">| PATCH /tasks/:id  |  update resources |</span>
+<span num="8">| DELETE /tasks/:id | destroy resources |</span>
+<span num="9">+-------------------+-------------------+</span>
+</pre>
+</div>
+
+      
+      <span class="pagenumber">15</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Write Tasks Handler</h3>
+        
+  <div class="code" contenteditable="true" spellcheck="false">
+<pre contenteditable="true" spellcheck="false"><span num="1">package main</span>
+<span num="2"></span>
+<span num="3">import (</span>
+<span num="4">    "net/http"</span>
+<span num="5">)</span>
+<span num="6"></span>
+<span num="7">func taskHandler(w http.ResponseWriter, r *http.Request) {</span>
+<span num="8">    switch r.Method {</span>
+<span num="9">    case http.MethodGet:</span>
+<span num="10">    case http.MethodPost:</span>
+<span num="11">    case http.MethodPatch:</span>
+<span num="12">    case http.MethodDelete:</span>
+<span num="13">    default:</span>
+<span num="14">        http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)</span>
+<span num="15">    }</span>
+<span num="16">}</span>
+<span num="17"></span>
+<span num="18">func main() {</span>
+<span num="19">    http.HandleFunc("/tasks/", taskHandler)</span>
+<span num="20">    http.ListenAndServe(":8000", nil)</span>
+<span num="21">}</span>
+</pre>
+</div>
+
+      
+      <span class="pagenumber">16</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>HTTP Status Code</h3>
+        
+  <ul>
+  
+    <li>1xx - Information</li>
+  
+    <li>2xx - Success</li>
+  
+    <li>3xx - Redirect</li>
+  
+    <li>4xx - Client error</li>
+  
+    <li>5xx - Server error</li>
+  
+  </ul>
+
+      
+      <span class="pagenumber">17</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h2>Going Deeper</h2>
+      
+      <span class="pagenumber">18</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Work Flow Diagram</h3>
+        
+<div class="image">
+  <img src="./Developing API Services With Golang_files/graph.png">
+</div>
+
+      
+      <span class="pagenumber">19</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Single Responsibility / Separation of Concerns</h3>
+        
+  
+  <div class="code"><pre>A class should have one and only one reason to change, meaning that a class should have only one
+job.</pre></div>
+  
+
+  <div class="code">
+<pre><span num="9">type Repository struct {</span>
+<span num="10">    db *sql.DB // output</span>
+<span num="11">}</span>
+<span num="12"></span>
+<span num="13">type Service struct {</span>
+<span num="14">    repo *Repository // need repo</span>
+<span num="15">}</span>
+<span num="16"></span>
+<span num="17">type Transport struct {</span>
+<span num="18">    svc *Service // need svc</span>
+<span num="19">}</span>
+<span num="20"></span>
+<span num="21">func main() {</span>
+<span num="22">    db, _ := sql.Open("sqlite3", ":memory:") // open database connection</span>
+<span num="23">    repo := &amp;Repository{db: db}              // create repository</span>
+<span num="24">    svc := &amp;Service{repo: repo}              // create service</span>
+<span num="25">    trp := &amp;Transport{svc: svc}              // create transport</span>
+<span num="26"></span>
+<span num="27">    http.ListenAndServe(":8000", trp) // listen for input at port 8000</span>
+<span num="28">}</span>
+</pre>
+</div>
+
+      
+      <span class="pagenumber">20</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Dependency Inversion</h3>
+        
+  
+  <div class="code"><pre>Entities must depend on abstractions, not on concretions. It states that the high-level module
+must not depend on the low-level module, but they should depend on abstractions. To simplify,
+Dependency Inversion makes all the components don't need to know the details of other components
+and gives them more freedom to choose their dependencies implementation.</pre></div>
+  
+
+  <div class="code">
+<pre><span num="1">type TaskRepository interface {</span>
+<span num="2">    Fetch() ([]*Task, error)</span>
+<span num="3">}</span>
+<span num="4"></span>
+<span num="5">type TaskRepoPostgresql struct{}</span>
+<span num="6"></span>
+<span num="7">func (p TaskRepoPostgresql) Fetch() ([]*Task, error) {}</span>
+<span num="8"></span>
+<span num="9">type TaskRepoVendor struct{}</span>
+<span num="10"></span>
+<span num="11">func (v TaskRepoVendor) Fetch() ([]*Task, error) {}</span>
+<span num="12"></span>
+<span num="13"><b>type TaskService struct {</b></span>
+<span num="14">    <b>// don't need to know whether it's Postgresql or Vendor</b></span>
+<span num="15">    <b>// gives dependants more freedom to choose the TaskRepository implementation</b></span>
+<span num="16">    <b>repo TaskRepository</b></span>
+<span num="17"><b>}</b></span>
+</pre>
+</div>
+
+      
+      <span class="pagenumber">21</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Connecting to the Database</h3>
+        
+  <div class="code" contenteditable="true" spellcheck="false">
+<pre contenteditable="true" spellcheck="false"><span num="1">const (</span>
+<span num="2">    queryMigrate string = `CREATE TABLE IF NOT EXISTS tasks(</span>
+<span num="3">        id TEXT PRIMARY KEY,</span>
+<span num="4">        name TEXT NOT NULL UNIQUE,</span>
+<span num="5">        is_active BOOLEAN NOT NULL DEFAULT TRUE</span>
+<span num="6">    )`</span>
+<span num="7"></span>
+<span num="8">    querySeed string = `INSERT INTO tasks (id, name) VALUES('seed1', 'task seed 1')`</span>
+<span num="9">)</span>
+<span num="10"></span>
+<span num="11"><b>// this function is simplified</b></span>
+<span num="12"><b>// please don't use this function in production</b></span>
+<span num="13">func initializeDatabase() *sql.DB {</span>
+<span num="14">    db, _ := sql.Open("sqlite3", ":memory:")</span>
+<span num="15">    db.Exec(queryMigrate)</span>
+<span num="16">    db.Exec(querySeed)</span>
+<span num="17">    return db</span>
+<span num="18">}</span>
+</pre>
+</div>
+
+      
+      <span class="pagenumber">22</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Directory Structure</h3>
+        
+  <div class="code">
+<pre><span num="1">.</span>
+<span num="2">├── cmd</span>
+<span num="3">│&nbsp;&nbsp; └── http</span>
+<span num="4">│&nbsp;&nbsp;     └── main.go</span>
+<span num="5">├── domain</span>
+<span num="6">│&nbsp;&nbsp; └── task.go</span>
+<span num="7">└── task</span>
+<span num="8"> &nbsp;&nbsp; ├── provider.go</span>
+<span num="9"> &nbsp;&nbsp; ├── repository_sqlite.go</span>
+<span num="10"> &nbsp;&nbsp; ├── service.go</span>
+<span num="11"> &nbsp;&nbsp; └── transport_http.go</span>
+</pre>
+</div>
+
+  
+  <div class="code"><pre>cmd/       - to put your application command (http, cli, grpc)
+domain/    - to put your application entities, specification, models and interfaces
+             (task, user, product, etc)
+task/      - to put your task entity implementation, if you have user entity, then create user
+             directory
+provider   - to put your dependency provider (constructor) here, will works along with dependency
+             injection
+repository - to put your repository implementation (sqlite, mysql, external service)
+service    - to put your business &amp; application logic
+transport  - to put your transport implementation (http, cli, grpc)</pre></div>
+  
+
+      
+      <span class="pagenumber">23</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Fetch All Tasks Test</h3>
+        
+  
+  <div class="code"><pre>./cmd/fetch-example/main.go</pre></div>
+  
+
+  <div class="code" contenteditable="true" spellcheck="false">
+<pre contenteditable="true" spellcheck="false"><span num="1">package main</span>
+<span num="2"></span>
+<span num="3">import (</span>
+<span num="4">    "fmt"</span>
+<span num="5">    "io"</span>
+<span num="6">    "net/http"</span>
+<span num="7">)</span>
+<span num="8"></span>
+<span num="9">func main() {</span>
+<span num="10">    resp, _ := http.Get("http://localhost:8000/tasks/")</span>
+<span num="11">    defer resp.Body.Close()</span>
+<span num="12">    b, _ := io.ReadAll(resp.Body)</span>
+<span num="13">    fmt.Println(string(b))</span>
+<span num="14">}</span>
+</pre>
+</div>
+
+      
+      <span class="pagenumber">24</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Store Task Test</h3>
+        
+  
+  <div class="code"><pre>./cmd/store-example/main.go</pre></div>
+  
+
+  <div class="code" contenteditable="true" spellcheck="false">
+<pre contenteditable="true" spellcheck="false"><span num="1">package main</span>
+<span num="2"></span>
+<span num="3">import (</span>
+<span num="4">    "fmt"</span>
+<span num="5">    "io"</span>
+<span num="6">    "math/rand"</span>
+<span num="7">    "net/http"</span>
+<span num="8">    "strings"</span>
+<span num="9">    "time"</span>
+<span num="10">)</span>
+<span num="11"></span>
+<span num="12">func main() {</span>
+<span num="13">    rand.Seed(time.Now().UnixNano())</span>
+<span num="14">    suffix := rand.Intn(1000)</span>
+<span num="15">    payload := fmt.Sprintf(`{"name": "testing demo %04d"}`, suffix)</span>
+<span num="16">    body := strings.NewReader(payload)</span>
+<span num="17">    resp, _ := http.Post("http://localhost:8000/tasks/", "application/json", body)</span>
+<span num="18">    defer resp.Body.Close()</span>
+<span num="19">    b, _ := io.ReadAll(resp.Body)</span>
+<span num="20">    fmt.Println(string(b))</span>
+<span num="21">}</span>
+</pre>
+</div>
+
+      
+      <span class="pagenumber">25</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h2>Going Beyond</h2>
+      
+      <span class="pagenumber">26</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Conclusion</h3>
+        
+  <ul>
+  
+    <li>It is better to write a semantic API</li>
+  
+    <li>Dependency Inversion gives you a freedom to choose and create an implementation</li>
+  
+    <li>Single Responsibility gives you a clear insight what tasks are assign to which structs</li>
+  
+    <li>It is still better to construct your project repository according your needs</li>
+  
+  </ul>
+
+      
+      <span class="pagenumber">27</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>References</h3>
+        
+  <ul>
+  
+    <li><a href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html" target="_blank">blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html</a></li>
+  
+    <li><a href="https://clavinjune.dev/en/blogs/golang-dependency-injection-using-wire/" target="_blank">clavinjune.dev/en/blogs/golang-dependency-injection-using-wire/</a></li>
+  
+    <li><a href="https://clavinjune.dev/en/blogs/this-is-why-you-should-learn-golang/" target="_blank">clavinjune.dev/en/blogs/this-is-why-you-should-learn-golang/</a></li>
+  
+    <li><a href="https://digitalocean.com/community/conceptual_articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design/" target="_blank">digitalocean.com/community/conceptual_articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design/</a></li>
+  
+    <li><a href="https://jsonplaceholder.typicode.com/" target="_blank">jsonplaceholder.typicode.com/</a></li>
+  
+    <li><a href="https://martinfowler.com/articles/injection.html" target="_blank">martinfowler.com/articles/injection.html</a></li>
+  
+  </ul>
+
+      
+      <span class="pagenumber">28</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Google Form to Know Me Well</h3>
+        
+<iframe src="./Developing API Services With Golang_files/saved_resource.html" height="635" width="935"></iframe>
+
+      
+      <span class="pagenumber">29</span>
+      </article>
+  
+  
+
+      <article>
+        <h3>Thank you</h3>
+        
+          <div class="presenter">
+            
+  
+  <p>
+    Clavin June
+  </p>
+  
+
+  
+  <p>
+    Software Engineer, Technology Company
+  </p>
+  
+<p class="link"><a href="https://clavinjune.dev/" target="_blank">https://clavinjune.dev/</a></p>
+          </div>
+        
+      </article>
+
+    <div class="slide-area" id="prev-slide-area"></div><div class="slide-area" id="next-slide-area"></div></section>
+
+    <div id="help" style="display: none;">
+      Use the left and right arrow keys or click the left and right
+      edges of the page to navigate between slides.<br>
+      (Press 'H' or navigate to hide this message.)
+    </div>
+
+    
+    <script src="./Developing API Services With Golang_files/play.js"></script>
+    
+
+    <script>
+      (function() {
+        
+        if (window["location"] && window["location"]["hostname"] == "talks.golang.org") {
+          var ga = document.createElement("script"); ga.type = "text/javascript"; ga.async = true;
+          ga.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";
+          var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ga, s);
+        }
+      })();
+    </script>
+  
+
+<link rel="stylesheet" type="text/css" href="./Developing API Services With Golang_files/css"><link rel="stylesheet" type="text/css" href="./Developing API Services With Golang_files/styles.css"></body></html>

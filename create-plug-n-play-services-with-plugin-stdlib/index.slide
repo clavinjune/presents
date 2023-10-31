@@ -1,9 +1,15 @@
 Create Plug-n-Play Services with Plugin Stdlib
-: Feb 2024 @ GopherCon EU - Athens
+Feb 2024 @ GopherCon EU - Athens
 
 Clavin June
 Software Infrastructure Engineer, GoTo Financial
 https://clavinjune.dev/
+
+* Why
+
+- Extending functionality dynamically
+- Modularity
+- Scalability
 
 * Plugin Stdlib
 
@@ -22,12 +28,6 @@ Usage
 * Demo
 
 .video assets/demo.mov video/mp4 550 900
-
-* But, Why?
-
-- Extending functionality dynamically
-- Modularity
-- Scalability
 
 * Resources
 
