@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<!-- saved from url=(0074)http://localhost:3999/golang-structured-logging-introduction/index.slide#1 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Golang Structured Logging Introduction</title>
+    
+    <script>
+      var notesEnabled =  true ;
+    </script>
+    <script src="./Golang Structured Logging Introduction_files/slides.js"></script>
+
+    
+    <script>
+      var sections = [{"Number":[1],"Title":"Experiment / Standard Library","ID":"","Elem":[{"Bullet":["golang.org/x/exp/slog @ go1.20","log/slog @ go1.21"]}],"Notes":null,"Classes":null,"Styles":null},{"Number":[2],"Title":"Code Example","ID":"","Elem":[{"Cmd":".play assets/simple.go /^var/,/^}/","Text":"\n\u003cpre style=\"display: none\"\u003e\u003cspan\u003epackage main\n\nimport (\n\t\u0026#34;log/slog\u0026#34;\n\t\u0026#34;net/http\u0026#34;\n\t\u0026#34;os\u0026#34;\n)\n\n\u003c/span\u003e\u003c/pre\u003e\u003cpre\u003e\u003cspan num=\"9\"\u003evar (\u003c/span\u003e\n\u003cspan num=\"10\"\u003e    textLogger *slog.Logger = slog.New(slog.NewTextHandler(os.Stdout, \u0026amp;slog.HandlerOptions{}))\u003c/span\u003e\n\u003cspan num=\"11\"\u003e    jsonLogger *slog.Logger = slog.New(slog.NewJSONHandler(os.Stdout, \u0026amp;slog.HandlerOptions{}))\u003c/span\u003e\n\u003cspan num=\"12\"\u003e)\u003c/span\u003e\n\u003cspan num=\"13\"\u003e\u003c/span\u003e\n\u003cspan num=\"14\"\u003efunc main() {\u003c/span\u003e\n\u003cspan num=\"15\"\u003e    slog.Info(\u0026#34;this is info using default logger\u0026#34;)\u003c/span\u003e\n\u003cspan num=\"16\"\u003e    textLogger.Warn(\u0026#34;this is warning\u0026#34;, slog.Int(\u0026#34;response_code\u0026#34;, http.StatusNotFound))\u003c/span\u003e\n\u003cspan num=\"17\"\u003e    jsonLogger.Error(\u0026#34;this is error\u0026#34;,\u003c/span\u003e\n\u003cspan num=\"18\"\u003e        slog.String(\u0026#34;status\u0026#34;, http.StatusText(http.StatusInternalServerError)),\u003c/span\u003e\n\u003cspan num=\"19\"\u003e        slog.Bool(\u0026#34;is_json\u0026#34;, true),\u003c/span\u003e\n\u003cspan num=\"20\"\u003e    )\u003c/span\u003e\n\u003cspan num=\"21\"\u003e}\u003c/span\u003e\n\u003c/pre\u003e\n","Play":true,"Edit":false,"FileName":"simple.go","Ext":".go","Raw":"dmFyICgKCXRleHRMb2dnZXIgKnNsb2cuTG9nZ2VyID0gc2xvZy5OZXcoc2xvZy5OZXdUZXh0SGFuZGxlcihvcy5TdGRvdXQsICZzbG9nLkhhbmRsZXJPcHRpb25ze30pKQoJanNvbkxvZ2dlciAqc2xvZy5Mb2dnZXIgPSBzbG9nLk5ldyhzbG9nLk5ld0pTT05IYW5kbGVyKG9zLlN0ZG91dCwgJnNsb2cuSGFuZGxlck9wdGlvbnN7fSkpCikKCmZ1bmMgbWFpbigpIHsKCXNsb2cuSW5mbygidGhpcyBpcyBpbmZvIHVzaW5nIGRlZmF1bHQgbG9nZ2VyIikKCXRleHRMb2dnZXIuV2FybigidGhpcyBpcyB3YXJuaW5nIiwgc2xvZy5JbnQoInJlc3BvbnNlX2NvZGUiLCBodHRwLlN0YXR1c05vdEZvdW5kKSkKCWpzb25Mb2dnZXIuRXJyb3IoInRoaXMgaXMgZXJyb3IiLAoJCXNsb2cuU3RyaW5nKCJzdGF0dXMiLCBodHRwLlN0YXR1c1RleHQoaHR0cC5TdGF0dXNJbnRlcm5hbFNlcnZlckVycm9yKSksCgkJc2xvZy5Cb29sKCJpc19qc29uIiwgdHJ1ZSksCgkpCn0K"},{"Cmd":".link https://go.dev/play/p/_U0MOMSJ0ts playground","URL":{"Scheme":"https","Opaque":"","User":null,"Host":"go.dev","Path":"/play/p/_U0MOMSJ0ts","RawPath":"","OmitHost":false,"ForceQuery":false,"RawQuery":"","Fragment":"","RawFragment":""},"Label":"playground"}],"Notes":null,"Classes":null,"Styles":null},{"Number":[3],"Title":"Allocations to be Concerned","ID":"","Elem":[{"Cmd":".play assets/allocation.go /^func main/,/^}/","Text":"\n\u003cpre style=\"display: none\"\u003e\u003cspan\u003epackage main\n\nimport (\n\t\u0026#34;log/slog\u0026#34;\n\t\u0026#34;time\u0026#34;\n)\n\n\u003c/span\u003e\u003c/pre\u003e\u003cpre\u003e\u003cspan num=\"8\"\u003efunc main() {\u003c/span\u003e\n\u003cspan num=\"9\"\u003e    slog.Info(\u0026#34;❌ have more allocations since we don\u0026#39;t define the type\u0026#34;,\u003c/span\u003e\n\u003cspan num=\"10\"\u003e        \u0026#34;key\u0026#34;, \u0026#34;value\u0026#34;,\u003c/span\u003e\n\u003cspan num=\"11\"\u003e        \u0026#34;key2\u0026#34;, time.Minute,\u003c/span\u003e\n\u003cspan num=\"12\"\u003e    )\u003c/span\u003e\n\u003cspan num=\"13\"\u003e    slog.Info(\u0026#34;✅ avoid extra allocations\u0026#34;,\u003c/span\u003e\n\u003cspan num=\"14\"\u003e        slog.String(\u0026#34;key\u0026#34;, \u0026#34;value\u0026#34;),\u003c/span\u003e\n\u003cspan num=\"15\"\u003e        slog.Duration(\u0026#34;key2\u0026#34;, time.Minute),\u003c/span\u003e\n\u003cspan num=\"16\"\u003e    )\u003c/span\u003e\n\u003cspan num=\"17\"\u003e}\u003c/span\u003e\n\u003c/pre\u003e\n","Play":true,"Edit":false,"FileName":"allocation.go","Ext":".go","Raw":"ZnVuYyBtYWluKCkgewoJc2xvZy5JbmZvKCLinYwgaGF2ZSBtb3JlIGFsbG9jYXRpb25zIHNpbmNlIHdlIGRvbid0IGRlZmluZSB0aGUgdHlwZSIsCgkJImtleSIsICJ2YWx1ZSIsCgkJImtleTIiLCB0aW1lLk1pbnV0ZSwKCSkKCXNsb2cuSW5mbygi4pyFIGF2b2lkIGV4dHJhIGFsbG9jYXRpb25zIiwKCQlzbG9nLlN0cmluZygia2V5IiwgInZhbHVlIiksCgkJc2xvZy5EdXJhdGlvbigia2V5MiIsIHRpbWUuTWludXRlKSwKCSkKfQo="},{"Cmd":".link https://go.dev/play/p/bYB7L5Iinbm playground","URL":{"Scheme":"https","Opaque":"","User":null,"Host":"go.dev","Path":"/play/p/bYB7L5Iinbm","RawPath":"","OmitHost":false,"ForceQuery":false,"RawQuery":"","Fragment":"","RawFragment":""},"Label":"playground"}],"Notes":null,"Classes":null,"Styles":null},{"Number":[4],"Title":"Derive Logger from another Logger","ID":"","Elem":[{"Cmd":".play assets/derive.go /^func main/,/^}/","Text":"\n\u003cpre style=\"display: none\"\u003e\u003cspan\u003epackage main\n\nimport (\n\t\u0026#34;log/slog\u0026#34;\n)\n\n\u003c/span\u003e\u003c/pre\u003e\u003cpre\u003e\u003cspan num=\"7\"\u003efunc main() {\u003c/span\u003e\n\u003cspan num=\"8\"\u003e    logger2 := slog.With(slog.Int(\u0026#34;num\u0026#34;, 3))\u003c/span\u003e\n\u003cspan num=\"9\"\u003e\u003c/span\u003e\n\u003cspan num=\"10\"\u003e    logger2.Info(\u0026#34;whenever logger2 is called, you can see the num attribute derived\u0026#34;)\u003c/span\u003e\n\u003cspan num=\"11\"\u003e}\u003c/span\u003e\n\u003c/pre\u003e\n","Play":true,"Edit":false,"FileName":"derive.go","Ext":".go","Raw":"ZnVuYyBtYWluKCkgewoJbG9nZ2VyMiA6PSBzbG9nLldpdGgoc2xvZy5JbnQoIm51bSIsIDMpKQoKCWxvZ2dlcjIuSW5mbygid2hlbmV2ZXIgbG9nZ2VyMiBpcyBjYWxsZWQsIHlvdSBjYW4gc2VlIHRoZSBudW0gYXR0cmlidXRlIGRlcml2ZWQiKQp9Cg=="},{"Cmd":".link https://go.dev/play/p/fBk6k7xKksH playground","URL":{"Scheme":"https","Opaque":"","User":null,"Host":"go.dev","Path":"/play/p/fBk6k7xKksH","RawPath":"","OmitHost":false,"ForceQuery":false,"RawQuery":"","Fragment":"","RawFragment":""},"Label":"playground"}],"Notes":null,"Classes":null,"Styles":null},{"Number":[5],"Title":"Logger Group","ID":"","Elem":[{"Cmd":".play assets/group.go /^func main/,/^}/","Text":"\n\u003cpre style=\"display: none\"\u003e\u003cspan\u003epackage main\n\nimport (\n\t\u0026#34;log/slog\u0026#34;\n)\n\nfunc foobar(logger *slog.Logger, args []string) {\n\tlogger.Info(\u0026#34;from foboar\u0026#34;,\n\t\tslog.Any(\u0026#34;args\u0026#34;, args),\n\t\tslog.Bool(\u0026#34;ok\u0026#34;, true),\n\t)\n\n}\n\n\u003c/span\u003e\u003c/pre\u003e\u003cpre\u003e\u003cspan num=\"15\"\u003efunc main() {\u003c/span\u003e\n\u003cspan num=\"16\"\u003e    foobarLogger := slog.\u003c/span\u003e\n\u003cspan num=\"17\"\u003e        With(slog.String(\u0026#34;non_grouped\u0026#34;, \u0026#34;value\u0026#34;)).\u003c/span\u003e\n\u003cspan num=\"18\"\u003e        WithGroup(\u0026#34;grouped\u0026#34;)\u003c/span\u003e\n\u003cspan num=\"19\"\u003e    foobar(foobarLogger, []string{\u0026#34;a\u0026#34;, \u0026#34;b\u0026#34;})\u003c/span\u003e\n\u003cspan num=\"20\"\u003e}\u003c/span\u003e\n\u003c/pre\u003e\n","Play":true,"Edit":false,"FileName":"group.go","Ext":".go","Raw":"ZnVuYyBtYWluKCkgewoJZm9vYmFyTG9nZ2VyIDo9IHNsb2cuCgkJV2l0aChzbG9nLlN0cmluZygibm9uX2dyb3VwZWQiLCAidmFsdWUiKSkuCgkJV2l0aEdyb3VwKCJncm91cGVkIikKCWZvb2Jhcihmb29iYXJMb2dnZXIsIFtdc3RyaW5neyJhIiwgImIifSkKfQo="},{"Cmd":".link https://go.dev/play/p/MWI81l-XDVe playground","URL":{"Scheme":"https","Opaque":"","User":null,"Host":"go.dev","Path":"/play/p/MWI81l-XDVe","RawPath":"","OmitHost":false,"ForceQuery":false,"RawQuery":"","Fragment":"","RawFragment":""},"Label":"playground"}],"Notes":null,"Classes":null,"Styles":null},{"Number":[6],"Title":"The Most Efficient Way to Use Slog","ID":"","Elem":[{"Cmd":".play assets/efficient.go /^func main/,/^}/","Text":"\n\u003cpre style=\"display: none\"\u003e\u003cspan\u003epackage main\n\nimport (\n\t\u0026#34;context\u0026#34;\n\t\u0026#34;log/slog\u0026#34;\n\t\u0026#34;time\u0026#34;\n)\n\n\u003c/span\u003e\u003c/pre\u003e\u003cpre\u003e\u003cspan num=\"9\"\u003efunc main() {\u003c/span\u003e\n\u003cspan num=\"10\"\u003e    slog.LogAttrs(context.Background(), // context\u003c/span\u003e\n\u003cspan num=\"11\"\u003e        slog.LevelInfo,          // level\u003c/span\u003e\n\u003cspan num=\"12\"\u003e        \u0026#34;your message\u0026#34;,          // message\u003c/span\u003e\n\u003cspan num=\"13\"\u003e        slog.Float64(\u0026#34;key\u0026#34;, 10), // keys\u003c/span\u003e\n\u003cspan num=\"14\"\u003e        slog.Group(\u0026#34;latency\u0026#34;, // grouping keys\u003c/span\u003e\n\u003cspan num=\"15\"\u003e            slog.Duration(\u0026#34;duration\u0026#34;, time.Millisecond),\u003c/span\u003e\n\u003cspan num=\"16\"\u003e            slog.Time(\u0026#34;start\u0026#34;, time.Now()),\u003c/span\u003e\n\u003cspan num=\"17\"\u003e        ),\u003c/span\u003e\n\u003cspan num=\"18\"\u003e    )\u003c/span\u003e\n\u003cspan num=\"19\"\u003e}\u003c/span\u003e\n\u003c/pre\u003e\n","Play":true,"Edit":false,"FileName":"efficient.go","Ext":".go","Raw":"ZnVuYyBtYWluKCkgewoJc2xvZy5Mb2dBdHRycyhjb250ZXh0LkJhY2tncm91bmQoKSwgLy8gY29udGV4dAoJCXNsb2cuTGV2ZWxJbmZvLCAgICAgICAgICAvLyBsZXZlbAoJCSJ5b3VyIG1lc3NhZ2UiLCAgICAgICAgICAvLyBtZXNzYWdlCgkJc2xvZy5GbG9hdDY0KCJrZXkiLCAxMCksIC8vIGtleXMKCQlzbG9nLkdyb3VwKCJsYXRlbmN5IiwgLy8gZ3JvdXBpbmcga2V5cwoJCQlzbG9nLkR1cmF0aW9uKCJkdXJhdGlvbiIsIHRpbWUuTWlsbGlzZWNvbmQpLAoJCQlzbG9nLlRpbWUoInN0YXJ0IiwgdGltZS5Ob3coKSksCgkJKSwKCSkKfQo="},{"Cmd":".link https://go.dev/play/p/Yu31CiZesdh playground","URL":{"Scheme":"https","Opaque":"","User":null,"Host":"go.dev","Path":"/play/p/Yu31CiZesdh","RawPath":"","OmitHost":false,"ForceQuery":false,"RawQuery":"","Fragment":"","RawFragment":""},"Label":"playground"}],"Notes":null,"Classes":null,"Styles":null},{"Number":[7],"Title":"Use Case: Dynamic Log Level","ID":"","Elem":[{"Cmd":".play assets/dynamic.go /^var/,/^}/","Text":"\n\u003cpre style=\"display: none\"\u003e\u003cspan\u003epackage main\n\nimport (\n\t\u0026#34;log/slog\u0026#34;\n\t\u0026#34;os\u0026#34;\n)\n\n\u003c/span\u003e\u003c/pre\u003e\u003cpre\u003e\u003cspan num=\"8\"\u003evar (\u003c/span\u003e\n\u003cspan num=\"9\"\u003e    level  = new(slog.LevelVar)\u003c/span\u003e\n\u003cspan num=\"10\"\u003e    logger = slog.New(slog.NewTextHandler(\u003c/span\u003e\n\u003cspan num=\"11\"\u003e        os.Stdout, \u0026amp;slog.HandlerOptions{Level: level}))\u003c/span\u003e\n\u003cspan num=\"12\"\u003e)\u003c/span\u003e\n\u003cspan num=\"13\"\u003e\u003c/span\u003e\n\u003cspan num=\"14\"\u003efunc main() {\u003c/span\u003e\n\u003cspan num=\"15\"\u003e    logger.Debug(\u0026#34;won\u0026#39;t be shown\u0026#34;) // by default log level is INFO\u003c/span\u003e\n\u003cspan num=\"16\"\u003e    level.Set(slog.LevelDebug)     // change it to DEBUG\u003c/span\u003e\n\u003cspan num=\"17\"\u003e    logger.Debug(\u0026#34;shown\u0026#34;)\u003c/span\u003e\n\u003cspan num=\"18\"\u003e}\u003c/span\u003e\n\u003c/pre\u003e\n","Play":true,"Edit":false,"FileName":"dynamic.go","Ext":".go","Raw":"dmFyICgKCWxldmVsICA9IG5ldyhzbG9nLkxldmVsVmFyKQoJbG9nZ2VyID0gc2xvZy5OZXcoc2xvZy5OZXdUZXh0SGFuZGxlcigKCQlvcy5TdGRvdXQsICZzbG9nLkhhbmRsZXJPcHRpb25ze0xldmVsOiBsZXZlbH0pKQopCgpmdW5jIG1haW4oKSB7Cglsb2dnZXIuRGVidWcoIndvbid0IGJlIHNob3duIikgLy8gYnkgZGVmYXVsdCBsb2cgbGV2ZWwgaXMgSU5GTwoJbGV2ZWwuU2V0KHNsb2cuTGV2ZWxEZWJ1ZykgICAgIC8vIGNoYW5nZSBpdCB0byBERUJVRwoJbG9nZ2VyLkRlYnVnKCJzaG93biIpCn0K"},{"Cmd":".link https://go.dev/play/p/OTx-ZISFmm0 playground","URL":{"Scheme":"https","Opaque":"","User":null,"Host":"go.dev","Path":"/play/p/OTx-ZISFmm0","RawPath":"","OmitHost":false,"ForceQuery":false,"RawQuery":"","Fragment":"","RawFragment":""},"Label":"playground"}],"Notes":null,"Classes":null,"Styles":null},{"Number":[8],"Title":"Use Case: Redact Data","ID":"","Elem":[{"Cmd":".play assets/redaction.go /^var/,/^}/","Text":"\n\u003cpre style=\"display: none\"\u003e\u003cspan\u003epackage main\n\nimport (\n\t\u0026#34;log/slog\u0026#34;\n\t\u0026#34;os\u0026#34;\n)\n\n\u003c/span\u003e\u003c/pre\u003e\u003cpre\u003e\u003cspan num=\"8\"\u003evar (\u003c/span\u003e\n\u003cspan num=\"9\"\u003e    logger = slog.New(slog.NewTextHandler(\u003c/span\u003e\n\u003cspan num=\"10\"\u003e        os.Stdout, \u0026amp;slog.HandlerOptions{ReplaceAttr: func(g []string, a slog.Attr) slog.Attr {\u003c/span\u003e\n\u003cspan num=\"11\"\u003e            if \u0026#34;password\u0026#34; == a.Key {\u003c/span\u003e\n\u003cspan num=\"12\"\u003e                a.Value = slog.StringValue(\u0026#34;[PII DATA]\u0026#34;)\u003c/span\u003e\n\u003cspan num=\"13\"\u003e            }\u003c/span\u003e\n\u003cspan num=\"14\"\u003e            return a\u003c/span\u003e\n\u003cspan num=\"15\"\u003e        }}))\u003c/span\u003e\n\u003cspan num=\"16\"\u003e)\u003c/span\u003e\n\u003cspan num=\"17\"\u003e\u003c/span\u003e\n\u003cspan num=\"18\"\u003efunc main() {\u003c/span\u003e\n\u003cspan num=\"19\"\u003e    logger.Info(\u0026#34;password will be redacted\u0026#34;,\u003c/span\u003e\n\u003cspan num=\"20\"\u003e        slog.String(\u0026#34;password\u0026#34;, \u0026#34;P@$$w0rd?!\u0026#34;))\u003c/span\u003e\n\u003cspan num=\"21\"\u003e}\u003c/span\u003e\n\u003c/pre\u003e\n","Play":true,"Edit":false,"FileName":"redaction.go","Ext":".go","Raw":"dmFyICgKCWxvZ2dlciA9IHNsb2cuTmV3KHNsb2cuTmV3VGV4dEhhbmRsZXIoCgkJb3MuU3Rkb3V0LCAmc2xvZy5IYW5kbGVyT3B0aW9uc3tSZXBsYWNlQXR0cjogZnVuYyhnIFtdc3RyaW5nLCBhIHNsb2cuQXR0cikgc2xvZy5BdHRyIHsKCQkJaWYgInBhc3N3b3JkIiA9PSBhLktleSB7CgkJCQlhLlZhbHVlID0gc2xvZy5TdHJpbmdWYWx1ZSgiW1BJSSBEQVRBXSIpCgkJCX0KCQkJcmV0dXJuIGEKCQl9fSkpCikKCmZ1bmMgbWFpbigpIHsKCWxvZ2dlci5JbmZvKCJwYXNzd29yZCB3aWxsIGJlIHJlZGFjdGVkIiwKCQlzbG9nLlN0cmluZygicGFzc3dvcmQiLCAiUEAkJHcwcmQ/ISIpKQp9Cg=="},{"Cmd":".link https://go.dev/play/p/C4RdABVIIXS playground","URL":{"Scheme":"https","Opaque":"","User":null,"Host":"go.dev","Path":"/play/p/C4RdABVIIXS","RawPath":"","OmitHost":false,"ForceQuery":false,"RawQuery":"","Fragment":"","RawFragment":""},"Label":"playground"}],"Notes":null,"Classes":null,"Styles":null},{"Number":[9],"Title":"Use Case: Custom Handler","ID":"","Elem":[{"Cmd":".code assets/custom.go","Text":"\n\u003cpre\u003e\u003cspan num=\"1\"\u003epackage main\u003c/span\u003e\n\u003cspan num=\"2\"\u003e\u003c/span\u003e\n\u003cspan num=\"3\"\u003eimport (\u003c/span\u003e\n\u003cspan num=\"4\"\u003e    \u0026#34;context\u0026#34;\u003c/span\u003e\n\u003cspan num=\"5\"\u003e    \u0026#34;log/slog\u0026#34;\u003c/span\u003e\n\u003cspan num=\"6\"\u003e)\u003c/span\u003e\n\u003cspan num=\"7\"\u003e\u003c/span\u003e\n\u003cspan num=\"8\"\u003etype CustomHandler struct {\u003c/span\u003e\n\u003cspan num=\"9\"\u003e    slog.Handler\u003c/span\u003e\n\u003cspan num=\"10\"\u003e}\u003c/span\u003e\n\u003cspan num=\"11\"\u003e\u003c/span\u003e\n\u003cspan num=\"12\"\u003efunc (c *CustomHandler) Handle(ctx context.Context, r slog.Record) error {\u003c/span\u003e\n\u003cspan num=\"13\"\u003e    // handle context here for tracing, monitoring, logging, etc\u003c/span\u003e\n\u003cspan num=\"14\"\u003e    return c.Handler.Handle(ctx, r)\u003c/span\u003e\n\u003cspan num=\"15\"\u003e}\u003c/span\u003e\n\u003c/pre\u003e\n","Play":false,"Edit":false,"FileName":"custom.go","Ext":".go","Raw":"cGFja2FnZSBtYWluCgppbXBvcnQgKAoJImNvbnRleHQiCgkibG9nL3Nsb2ciCikKCnR5cGUgQ3VzdG9tSGFuZGxlciBzdHJ1Y3QgewoJc2xvZy5IYW5kbGVyCn0KCmZ1bmMgKGMgKkN1c3RvbUhhbmRsZXIpIEhhbmRsZShjdHggY29udGV4dC5Db250ZXh0LCByIHNsb2cuUmVjb3JkKSBlcnJvciB7CgkvLyBoYW5kbGUgY29udGV4dCBoZXJlIGZvciB0cmFjaW5nLCBtb25pdG9yaW5nLCBsb2dnaW5nLCBldGMKCXJldHVybiBjLkhhbmRsZXIuSGFuZGxlKGN0eCwgcikKfQo="},{"Cmd":".link https://go.dev/play/p/y7G-tFfjG9c playground","URL":{"Scheme":"https","Opaque":"","User":null,"Host":"go.dev","Path":"/play/p/y7G-tFfjG9c","RawPath":"","OmitHost":false,"ForceQuery":false,"RawQuery":"","Fragment":"","RawFragment":""},"Label":"playground"},{"Cmd":".link https://github.com/golang/example/blob/master/slog-handler-guide/README.md reference","URL":{"Scheme":"https","Opaque":"","User":null,"Host":"github.com","Path":"/golang/example/blob/master/slog-handler-guide/README.md","RawPath":"","OmitHost":false,"ForceQuery":false,"RawQuery":"","Fragment":"","RawFragment":""},"Label":"reference"}],"Notes":null,"Classes":null,"Styles":null}];
+      var titleNotes =  null 
+    </script>
+    <script src="./Golang Structured Logging Introduction_files/notes.js"></script>
+    
+
+    <script>
+      
+      if (window["location"] && window["location"]["hostname"] == "talks.golang.org") {
+        var _gaq = _gaq || [];
+        _gaq.push(["_setAccount", "UA-11222381-6"]);
+        _gaq.push(["b._setAccount", "UA-49880327-6"]);
+        window.trackPageview = function() {
+          _gaq.push(["_trackPageview", location.pathname+location.hash]);
+          _gaq.push(["b._trackPageview", location.pathname+location.hash]);
+        };
+        window.trackPageview();
+        window.trackEvent = function(category, action, opt_label, opt_value, opt_noninteraction) {
+          _gaq.push(["_trackEvent", category, action, opt_label, opt_value, opt_noninteraction]);
+          _gaq.push(["b._trackEvent", category, action, opt_label, opt_value, opt_noninteraction]);
+        };
+      }
+    </script>
+  <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1"><meta name="apple-mobile-web-app-capable" content="yes"></head>
+
+  <body style="display: none" class="loaded">
+
+    <section class="slides layout-widescreen">
+
+      <article class="current">
+        <h1>Golang Structured Logging Introduction</h1>
+        <h3>Jan 2024 @ Gopay Indonesia</h3>
+        
+        
+          <div class="presenter">
+            
+  
+  <p>
+    Jun
+  </p>
+  
+
+  
+  <p>
+    Cloud Observability, Gopay Systems
+  </p>
+  
+
+          </div>
+        
+      </article>
+
+  
+  
+      <article class="next">
+      
+        <h3>Experiment / Standard Library</h3>
+        
+  <ul>
+  
+    <li>golang.org/x/exp/slog @ go1.20</li>
+  
+    <li>log/slog @ go1.21</li>
+  
+  </ul>
+
+      
+      <span class="pagenumber">2</span>
+      </article>
+  
+  
+  
+      <article class="far-next">
+      
+        <h3>Code Example</h3>
+        
+  <div class="code playground">
+<pre style="display: none"><span>package main
+
+import (
+	"log/slog"
+	"net/http"
+	"os"
+)
+
+</span></pre><pre><span num="9">var (</span>
+<span num="10">    textLogger *slog.Logger = slog.New(slog.NewTextHandler(os.Stdout, &amp;slog.HandlerOptions{}))</span>
+<span num="11">    jsonLogger *slog.Logger = slog.New(slog.NewJSONHandler(os.Stdout, &amp;slog.HandlerOptions{}))</span>
+<span num="12">)</span>
+<span num="13"></span>
+<span num="14">func main() {</span>
+<span num="15">    slog.Info("this is info using default logger")</span>
+<span num="16">    textLogger.Warn("this is warning", slog.Int("response_code", http.StatusNotFound))</span>
+<span num="17">    jsonLogger.Error("this is error",</span>
+<span num="18">        slog.String("status", http.StatusText(http.StatusInternalServerError)),</span>
+<span num="19">        slog.Bool("is_json", true),</span>
+<span num="20">    )</span>
+<span num="21">}</span>
+</pre>
+</div><div class="buttons"><button class="run">Run</button></div><div class="ui-resizable output" style="display: none;"><div class="ui-resizable-handle ui-resizable-n" style="z-index: 90; display: block;"></div><div class="ui-resizable-handle ui-resizable-w" style="z-index: 90; display: block;"></div><div class="ui-resizable-handle ui-resizable-nw" style="z-index: 90; display: block;"></div><div class="buttons"><button class="run">Run</button><button class="kill">Kill</button><button class="close">Close</button></div><pre></pre></div>
+<p class="link"><a href="https://go.dev/play/p/_U0MOMSJ0ts" target="_blank">playground</a></p>
+      
+      <span class="pagenumber">3</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Allocations to be Concerned</h3>
+        
+  <div class="code playground">
+<pre style="display: none"><span>package main
+
+import (
+	"log/slog"
+	"time"
+)
+
+</span></pre><pre><span num="8">func main() {</span>
+<span num="9">    slog.Info("❌ have more allocations since we don't define the type",</span>
+<span num="10">        "key", "value",</span>
+<span num="11">        "key2", time.Minute,</span>
+<span num="12">    )</span>
+<span num="13">    slog.Info("✅ avoid extra allocations",</span>
+<span num="14">        slog.String("key", "value"),</span>
+<span num="15">        slog.Duration("key2", time.Minute),</span>
+<span num="16">    )</span>
+<span num="17">}</span>
+</pre>
+</div><div class="buttons"><button class="run">Run</button></div><div class="ui-resizable output" style="display: none;"><div class="ui-resizable-handle ui-resizable-n" style="z-index: 90; display: block;"></div><div class="ui-resizable-handle ui-resizable-w" style="z-index: 90; display: block;"></div><div class="ui-resizable-handle ui-resizable-nw" style="z-index: 90; display: block;"></div><div class="buttons"><button class="run">Run</button><button class="kill">Kill</button><button class="close">Close</button></div><pre></pre></div>
+<p class="link"><a href="https://go.dev/play/p/bYB7L5Iinbm" target="_blank">playground</a></p>
+      
+      <span class="pagenumber">4</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Derive Logger from another Logger</h3>
+        
+  <div class="code playground">
+<pre style="display: none"><span>package main
+
+import (
+	"log/slog"
+)
+
+</span></pre><pre><span num="7">func main() {</span>
+<span num="8">    logger2 := slog.With(slog.Int("num", 3))</span>
+<span num="9"></span>
+<span num="10">    logger2.Info("whenever logger2 is called, you can see the num attribute derived")</span>
+<span num="11">}</span>
+</pre>
+</div><div class="buttons"><button class="run">Run</button></div><div class="ui-resizable output" style="display: none;"><div class="ui-resizable-handle ui-resizable-n" style="z-index: 90; display: block;"></div><div class="ui-resizable-handle ui-resizable-w" style="z-index: 90; display: block;"></div><div class="ui-resizable-handle ui-resizable-nw" style="z-index: 90; display: block;"></div><div class="buttons"><button class="run">Run</button><button class="kill">Kill</button><button class="close">Close</button></div><pre></pre></div>
+<p class="link"><a href="https://go.dev/play/p/fBk6k7xKksH" target="_blank">playground</a></p>
+      
+      <span class="pagenumber">5</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Logger Group</h3>
+        
+  <div class="code playground">
+<pre style="display: none"><span>package main
+
+import (
+	"log/slog"
+)
+
+func foobar(logger *slog.Logger, args []string) {
+	logger.Info("from foboar",
+		slog.Any("args", args),
+		slog.Bool("ok", true),
+	)
+
+}
+
+</span></pre><pre><span num="15">func main() {</span>
+<span num="16">    foobarLogger := slog.</span>
+<span num="17">        With(slog.String("non_grouped", "value")).</span>
+<span num="18">        WithGroup("grouped")</span>
+<span num="19">    foobar(foobarLogger, []string{"a", "b"})</span>
+<span num="20">}</span>
+</pre>
+</div><div class="buttons"><button class="run">Run</button></div><div class="ui-resizable output" style="display: none;"><div class="ui-resizable-handle ui-resizable-n" style="z-index: 90; display: block;"></div><div class="ui-resizable-handle ui-resizable-w" style="z-index: 90; display: block;"></div><div class="ui-resizable-handle ui-resizable-nw" style="z-index: 90; display: block;"></div><div class="buttons"><button class="run">Run</button><button class="kill">Kill</button><button class="close">Close</button></div><pre></pre></div>
+<p class="link"><a href="https://go.dev/play/p/MWI81l-XDVe" target="_blank">playground</a></p>
+      
+      <span class="pagenumber">6</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>The Most Efficient Way to Use Slog</h3>
+        
+  <div class="code playground">
+<pre style="display: none"><span>package main
+
+import (
+	"context"
+	"log/slog"
+	"time"
+)
+
+</span></pre><pre><span num="9">func main() {</span>
+<span num="10">    slog.LogAttrs(context.Background(), // context</span>
+<span num="11">        slog.LevelInfo,          // level</span>
+<span num="12">        "your message",          // message</span>
+<span num="13">        slog.Float64("key", 10), // keys</span>
+<span num="14">        slog.Group("latency", // grouping keys</span>
+<span num="15">            slog.Duration("duration", time.Millisecond),</span>
+<span num="16">            slog.Time("start", time.Now()),</span>
+<span num="17">        ),</span>
+<span num="18">    )</span>
+<span num="19">}</span>
+</pre>
+</div><div class="buttons"><button class="run">Run</button></div><div class="ui-resizable output" style="display: none;"><div class="ui-resizable-handle ui-resizable-n" style="z-index: 90; display: block;"></div><div class="ui-resizable-handle ui-resizable-w" style="z-index: 90; display: block;"></div><div class="ui-resizable-handle ui-resizable-nw" style="z-index: 90; display: block;"></div><div class="buttons"><button class="run">Run</button><button class="kill">Kill</button><button class="close">Close</button></div><pre></pre></div>
+<p class="link"><a href="https://go.dev/play/p/Yu31CiZesdh" target="_blank">playground</a></p>
+      
+      <span class="pagenumber">7</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Use Case: Dynamic Log Level</h3>
+        
+  <div class="code playground">
+<pre style="display: none"><span>package main
+
+import (
+	"log/slog"
+	"os"
+)
+
+</span></pre><pre><span num="8">var (</span>
+<span num="9">    level  = new(slog.LevelVar)</span>
+<span num="10">    logger = slog.New(slog.NewTextHandler(</span>
+<span num="11">        os.Stdout, &amp;slog.HandlerOptions{Level: level}))</span>
+<span num="12">)</span>
+<span num="13"></span>
+<span num="14">func main() {</span>
+<span num="15">    logger.Debug("won't be shown") // by default log level is INFO</span>
+<span num="16">    level.Set(slog.LevelDebug)     // change it to DEBUG</span>
+<span num="17">    logger.Debug("shown")</span>
+<span num="18">}</span>
+</pre>
+</div><div class="buttons"><button class="run">Run</button></div><div class="ui-resizable output" style="display: none;"><div class="ui-resizable-handle ui-resizable-n" style="z-index: 90; display: block;"></div><div class="ui-resizable-handle ui-resizable-w" style="z-index: 90; display: block;"></div><div class="ui-resizable-handle ui-resizable-nw" style="z-index: 90; display: block;"></div><div class="buttons"><button class="run">Run</button><button class="kill">Kill</button><button class="close">Close</button></div><pre></pre></div>
+<p class="link"><a href="https://go.dev/play/p/OTx-ZISFmm0" target="_blank">playground</a></p>
+      
+      <span class="pagenumber">8</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Use Case: Redact Data</h3>
+        
+  <div class="code playground">
+<pre style="display: none"><span>package main
+
+import (
+	"log/slog"
+	"os"
+)
+
+</span></pre><pre><span num="8">var (</span>
+<span num="9">    logger = slog.New(slog.NewTextHandler(</span>
+<span num="10">        os.Stdout, &amp;slog.HandlerOptions{ReplaceAttr: func(g []string, a slog.Attr) slog.Attr {</span>
+<span num="11">            if "password" == a.Key {</span>
+<span num="12">                a.Value = slog.StringValue("[PII DATA]")</span>
+<span num="13">            }</span>
+<span num="14">            return a</span>
+<span num="15">        }}))</span>
+<span num="16">)</span>
+<span num="17"></span>
+<span num="18">func main() {</span>
+<span num="19">    logger.Info("password will be redacted",</span>
+<span num="20">        slog.String("password", "P@$$w0rd?!"))</span>
+<span num="21">}</span>
+</pre>
+</div><div class="buttons"><button class="run">Run</button></div><div class="ui-resizable output" style="display: none;"><div class="ui-resizable-handle ui-resizable-n" style="z-index: 90; display: block;"></div><div class="ui-resizable-handle ui-resizable-w" style="z-index: 90; display: block;"></div><div class="ui-resizable-handle ui-resizable-nw" style="z-index: 90; display: block;"></div><div class="buttons"><button class="run">Run</button><button class="kill">Kill</button><button class="close">Close</button></div><pre></pre></div>
+<p class="link"><a href="https://go.dev/play/p/C4RdABVIIXS" target="_blank">playground</a></p>
+      
+      <span class="pagenumber">9</span>
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Use Case: Custom Handler</h3>
+        
+  <div class="code">
+<pre><span num="1">package main</span>
+<span num="2"></span>
+<span num="3">import (</span>
+<span num="4">    "context"</span>
+<span num="5">    "log/slog"</span>
+<span num="6">)</span>
+<span num="7"></span>
+<span num="8">type CustomHandler struct {</span>
+<span num="9">    slog.Handler</span>
+<span num="10">}</span>
+<span num="11"></span>
+<span num="12">func (c *CustomHandler) Handle(ctx context.Context, r slog.Record) error {</span>
+<span num="13">    // handle context here for tracing, monitoring, logging, etc</span>
+<span num="14">    return c.Handler.Handle(ctx, r)</span>
+<span num="15">}</span>
+</pre>
+</div>
+<p class="link"><a href="https://go.dev/play/p/y7G-tFfjG9c" target="_blank">playground</a></p><p class="link"><a href="https://github.com/golang/example/blob/master/slog-handler-guide/README.md" target="_blank">reference</a></p>
+      
+      <span class="pagenumber">10</span>
+      </article>
+  
+  
+
+      <article>
+        <h3>Thank you</h3>
+        
+          <div class="presenter">
+            
+  
+  <p>
+    Jun
+  </p>
+  
+
+  
+  <p>
+    Cloud Observability, Gopay Systems
+  </p>
+  
+<p class="link"><a href="https://clavinjune.dev/" target="_blank">https://clavinjune.dev/</a></p>
+          </div>
+        
+      </article>
+
+    <div class="slide-area" id="prev-slide-area"></div><div class="slide-area" id="next-slide-area"></div></section>
+
+    <div id="help" style="display: none;">
+      Use the left and right arrow keys or click the left and right
+      edges of the page to navigate between slides.<br>
+      (Press 'H' or navigate to hide this message.)
+    </div>
+
+    
+    <script src="./Golang Structured Logging Introduction_files/play.js"></script>
+    
+
+    <script>
+      (function() {
+        
+        if (window["location"] && window["location"]["hostname"] == "talks.golang.org") {
+          var ga = document.createElement("script"); ga.type = "text/javascript"; ga.async = true;
+          ga.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";
+          var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ga, s);
+        }
+      })();
+    </script>
+  
+
+<link rel="stylesheet" type="text/css" href="./Golang Structured Logging Introduction_files/css"><link rel="stylesheet" type="text/css" href="./Golang Structured Logging Introduction_files/styles.css"></body></html>

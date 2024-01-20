@@ -1,0 +1,61 @@
+Golang Structured Logging Introduction
+Jan 2024 @ Gopay Indonesia
+
+Jun
+Cloud Observability, Gopay Systems
+https://clavinjune.dev/
+
+* Experiment / Standard Library
+
+- golang.org/x/exp/slog @ go1.20
+- log/slog @ go1.21
+
+* Code Example
+
+.play assets/simple.go /^var/,/^}/
+
+.link https://go.dev/play/p/_U0MOMSJ0ts playground
+
+* Allocations to be Concerned
+
+.play assets/allocation.go /^func main/,/^}/
+
+.link https://go.dev/play/p/bYB7L5Iinbm playground
+
+* Derive Logger from another Logger 
+
+.play assets/derive.go /^func main/,/^}/
+
+.link https://go.dev/play/p/fBk6k7xKksH playground
+
+* Logger Group
+
+.play assets/group.go /^func main/,/^}/
+
+.link https://go.dev/play/p/MWI81l-XDVe playground
+
+* The Most Efficient Way to Use Slog
+ 
+.play assets/efficient.go /^func main/,/^}/
+
+.link https://go.dev/play/p/Yu31CiZesdh playground
+
+* Use Case: Dynamic Log Level
+
+.play assets/dynamic.go /^var/,/^}/
+
+.link https://go.dev/play/p/OTx-ZISFmm0 playground
+
+* Use Case: Redact Data
+
+.play assets/redaction.go /^var/,/^}/
+
+.link https://go.dev/play/p/C4RdABVIIXS playground
+
+* Use Case: Custom Handler
+
+.code assets/custom.go
+
+.link https://go.dev/play/p/y7G-tFfjG9c playground
+
+.link https://github.com/golang/example/blob/master/slog-handler-guide/README.md reference
