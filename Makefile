@@ -1,4 +1,4 @@
-GOLANG_CMD_VERSION=v0.1.11
+GOLANG_CMD_VERSION=v0.17.0
 PRESENT_DEP=golang.org/x/tools/present@$(GOLANG_CMD_VERSION)
 PRESENT_CMD=golang.org/x/tools/cmd/present@$(GOLANG_CMD_VERSION)
 GRAPH_EASY_CMD=$(shell perl -V:'installbin' | awk -F= '{ print substr( $$2, 2, length($$2)-3) "/graph-easy" }')
