@@ -20,7 +20,7 @@ https://clavinjune.dev/
 
 .play assets/allocation.go /^func main/,/^}/
 
-.link https://go.dev/play/p/bYB7L5Iinbm playground
+.link https://go.dev/play/p/CMD1TzC9iWO playground
 
 * Derive Logger from another Logger 
 
@@ -59,3 +59,7 @@ https://clavinjune.dev/
 .link https://go.dev/play/p/y7G-tFfjG9c playground
 
 .link https://github.com/golang/example/blob/master/slog-handler-guide/README.md reference
+
+* Blog Post
+
+.link https://clavinjune.dev/en/blogs/golang-structured-logging-introduction/
